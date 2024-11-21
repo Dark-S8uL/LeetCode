@@ -1,6 +1,6 @@
 # LeetCode Daily Challenges
 
-Welcome to my LeetCode Daily Challenge repository! Here, I share my solutions to the daily problems posed by LeetCode. Each day, I tackle a new challenge and push my coding skills to the limit. Join me on this journey and let's solve some problems together!
+Welcome to my LeetCode Daily Challenge repository! Here, I share my solutions to the daily challenges from LeetCode, along with other interesting problems. Each day, I take on a new problem to sharpen my coding skills and push my problem-solving limits. Join me on this journey, and let’s tackle these challenges together!
 
 ## What's LeetCode?
 
