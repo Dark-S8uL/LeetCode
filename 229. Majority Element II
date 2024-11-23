@@ -1,0 +1,19 @@
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        int n = nums.size() ;
+        sort(nums.begin(), nums.end()) ;
+        vector<int> v ;
+        int dup = nums[0], cnt = 1 ;
+        for(int i = 1; i < n; i++){
+            if(dup == nums[i]) cnt++ ;
+            else {
+                if(cnt > n/3) v.push_back(dup) ;
+                cnt = 1 ;
+                dup = nums[i] ;
+            }
+        }
+        if(cnt > n/3) v.push_back(dup) ;
+        return v ;
+    }
+};
