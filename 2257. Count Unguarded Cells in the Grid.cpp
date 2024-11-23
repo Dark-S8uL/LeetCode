@@ -5,8 +5,8 @@ public:
         for(vector<int>& a : guards) v[a[0]][a[1]] = 2 ;
         for(vector<int>& a : walls) v[a[0]][a[1]] = -1 ;
         vector<pair<int, int>> directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}} ;
-        for (const auto& guard : guards) {
-            for (const auto& dir : directions) {
+        for(const auto& guard : guards) {
+            for(const auto& dir : directions) {
                 int x = guard[0], y = guard[1] ;
                 while(true){
                     x += dir.first ;
