@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int minGroups(vector<vector<int>>& intervals) {
+        int n = intervals.size() ;
+        vector<int> a, d ;
+        for(vector<int>& i : intervals){
+            a.push_back(i[0]) ;
+            d.push_back(i[1]) ;
+        }
+        sort(a.begin(), a.end()) ;
+        sort(d.begin(), d.end()) ;
+        int i = 0, j = 0, cnt = 0, maxi = 0 ;
+        while(i < n){
+            if(a[i] <= d[j]){
+                cnt++ ;
+                i++ ;
+            } else{
+                cnt-- ;
+                j++ ;
+            }
+            maxi = max(maxi, cnt) ;
+        }
+        return maxi ;
+    }
+};
