@@ -1,0 +1,18 @@
+class Solution {
+public:
+    vector<int> maximumBeauty(vector<vector<int>>& items, vector<int>& q) {
+        int n = items.size(), m = q.size() ;
+        sort(items.begin(), items.end()) ;
+        vector<int> v ;
+        vector<int> maxBeauty(n);
+        maxBeauty[0] = items[0][1];
+        for (int i = 1; i < n; i++) {
+            maxBeauty[i] = max(maxBeauty[i - 1], items[i][1]);
+        }
+        for (int p : q) {
+            int idx = upper_bound(items.begin(),items.end(),vector<int>{p,INT_MAX})-items.begin()-1;
+            v.push_back(idx >= 0 ? maxBeauty[idx] : 0);
+        }
+        return v;
+    }
+};
