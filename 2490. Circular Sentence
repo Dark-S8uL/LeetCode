@@ -1,0 +1,16 @@
+class Solution {
+public:
+    bool isCircularSentence(string s) {
+        int n = s.size() ;
+        if(s[0] != s[n-1]) return false ;
+        int i = 0, j = 2 ;
+        while(j < n){
+            if(s[i+1] == ' '){
+                if(s[i] != s[j]) return false ;
+            }
+            i++ ;
+            j++ ;
+        }
+        return true ;
+    }
+};
