@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int minSubarray(vector<int>& nums, int p) {
+        int n = nums.size() ;
+        long long rem = 0 ;
+        for(int num : nums) rem += num ;
+        rem %= p ;
+        if(rem == 0) return 0 ;
+        unordered_map<int, int> mp ;
+        mp[0] = -1 ;
+        long long s = 0 ;
+        int len = n ;
+        for(int i = 0; i < n; i++){
+            s = (s + nums[i]) % p ;
+            long long r = (s - rem + p) % p ;
+            if(mp.find(r) != mp.end()){
+                len = min(len, i - mp[r]) ;
+            }
+            mp[s] = i ;
+        }
+        return len == n ? -1 : len ;
+    }
+};
