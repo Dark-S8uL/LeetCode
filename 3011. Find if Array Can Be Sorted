@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int setBits(int n){
+        int cnt = 0;
+        while (n > 0) {
+            cnt += n % 2 ;
+            n /= 2 ;
+        }
+        return cnt;
+    }
+    bool canSortArray(vector<int>& nums) {
+        int n = nums.size() ;
+        for(int i = 0; i < n-1; i++){
+            for(int j = 0; j < n-i-1; j++){
+                if(nums[j] > nums[j+1] && setBits(nums[j]) == setBits(nums[j+1])){
+                    swap(nums[j], nums[j+1]) ;
+                }
+            }
+        }
+        for (int i = 0; i < n-1; i++) {
+            if (nums[i] > nums[i + 1]) return false;
+        }
+        return true;
+    }
+};
