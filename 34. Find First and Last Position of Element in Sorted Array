@@ -1,0 +1,51 @@
+Approach - #1
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        int n = nums.size() ;
+        int s = 0, e = 0 ;
+        int i = 0 ;
+        for(i = 0; i < n; i++){
+            if(nums[i] == target){
+                s = i ;
+                break ;
+            }
+        }
+        if(i == n) s = -1 ;
+        i = 0 ;
+        for(i = n-1; i >= 0; i--){
+            if(nums[i] == target){
+                e = i ;
+                break ;
+            }
+        }
+        if(i == -1) e = -1 ;
+        return {s, e} ;
+    }
+};
+
+Approach - #2
+class Solution {
+public:
+    int solve(vector<int>& nums, int target, int f) {
+        int l = 0, r = nums.size() - 1 ;
+        int idx = -1 ;
+        while (l <= r) {
+            int mid = l + (r - l) / 2 ;
+            if (nums[mid] > target) r = mid - 1 ;
+            else if(nums[mid] < target) l = mid + 1;
+            else {
+                idx = mid ;
+                if(f) r = mid - 1 ;
+                else l = mid + 1 ;
+            } 
+        }
+        return idx;
+    }
+    vector<int> searchRange(vector<int>& nums, int target) {
+        if(nums.size() == 0) return {-1, -1} ;
+        int s = solve(nums, target, true);
+        int e = solve(nums, target, false);
+        return {s, e};
+    }
+};
