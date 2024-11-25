@@ -1,0 +1,14 @@
+class Solution {
+public:
+    int hIndex(vector<int>& cit) {
+        int n = cit.size() ;
+        vector<int> v(n+1, 0) ;
+        for(int c : cit) v[min(c, n)]++ ;
+        int p = 0 ;
+        for(int i = n; i >= 0; i--){
+            p += v[i] ;
+            if(p >= i) return i ;
+        }
+        return 0 ;
+    }
+};
