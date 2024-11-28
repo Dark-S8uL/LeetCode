@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        sort(nums.begin(), nums.end()) ;
+        int n = nums.size() ;
+        int cnt = 1, dup = nums[0] ;
+        vector<pair<int, int>> v ;
+        for(int i = 1; i < n; i++){
+            if(dup == nums[i]) cnt++ ;
+            else {
+                v.push_back({cnt, dup}) ;
+                cnt = 1 ;
+                dup = nums[i] ;
+            }
+        }
+        v.push_back({cnt, dup}) ;
+        sort(v.rbegin(), v.rend()) ;
+        nums.clear() ;
+        for(int i = 0; i < n && k > 0; i++){
+            nums.push_back(v[i].second) ;
+            k-- ;
+        }
+        return nums ;
+    }
+};
