@@ -1,0 +1,47 @@
+Approach #1 :
+
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        sort(nums.begin(), nums.end()) ;
+    }
+};
+
+-------------------------------------------------------------
+Approach #2 :
+
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        int zeros = 0, ones = 0, n = nums.size();
+        for(int num : nums) {
+            if(num == 0) zeros++;
+            else if(num == 1) ones++ ;
+        }
+        for(int i = 0; i < zeros; ++i) nums[i] = 0;
+        for(int i = zeros; i < zeros + ones; ++i) nums[i] = 1;
+        for(int i = zeros + ones; i < n; ++i) nums[i] = 2;
+    }
+};
+
+---------------------------------------------------------------
+Approach #3 :
+
+class Solution {
+public:
+    void sortColors(vector<int>& nums) {
+        int n = nums.size() ;
+        int l = 0, m = 0, h = n-1 ;
+        while(m <= h){
+            if(nums[m] == 0){
+                swap(nums[l], nums[m]) ;
+                l++ ;
+                m++ ;
+            } else if(nums[m] == 1) m++ ;
+            else {
+                swap(nums[m], nums[h]) ;
+                h-- ;
+            }
+        }
+    }
+};
