@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int isPrefixOfWord(string s, string w) {
+        int m = s.length(), n = w.length() ;
+        int cnt = 1 ;
+        int i = 0 ;
+        while (i < m) {
+            while(i < m && s[i] == ' ') i++ ;
+            if (i >= m) break ;
+            int j = 0 ;
+            while(i < m && j < n && s[i] == w[j]) {
+                i++ ;
+                j++ ;
+            }
+            if (j == n) return cnt;
+            while (i < m && s[i] != ' ') i++ ;
+            cnt++ ; 
+        }
+        return -1;
+    }
+};
