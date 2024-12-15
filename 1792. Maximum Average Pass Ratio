@@ -1,0 +1,28 @@
+class Solution {
+public:
+    double maxAverageRatio(vector<vector<int>>& classes, int stud) {
+        auto gain = [](const vector<int>& c) {
+            double p = c[0], t = c[1];
+            return (p + 1) / (t + 1) - p / t;
+        };
+        auto cmp = [&](const vector<int>& a, const vector<int>& b) {
+            return gain(a) < gain(b);
+        };
+        priority_queue<vector<int>, vector<vector<int>>, decltype(cmp)> pq(cmp);
+        for (const auto& c : classes) pq.push(c);
+        while (stud-- > 0) {
+            auto top = pq.top();
+            pq.pop();
+            top[0]++;
+            top[1]++;
+            pq.push(top);
+        }
+        double avg = 0.0;
+        while (!pq.empty()) {
+            const auto& c = pq.top();
+            avg += (double)c[0] / c[1];
+            pq.pop();
+        }
+        return avg / classes.size();
+    }
+};
