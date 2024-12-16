@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<int> getFinalState(vector<int>& nums, int k, int mul) {
+        int n = nums.size() ;
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> pq ;
+        for(int i = 0; i < n; i++) pq.push({nums[i], i}) ;
+        while(k){
+            int x = pq.top().first, idx = pq.top().second ;
+            pq.pop() ;
+            x *= mul ;
+            pq.push({x, idx}) ;
+            k-- ;
+        }
+        vector<int> v(n) ;
+        while(!pq.empty()){
+            int x = pq.top().first, idx = pq.top().second ;
+            pq.pop() ;
+            v[idx] = x ;
+        }
+        return v ;
+    }
+};
