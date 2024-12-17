@@ -1,0 +1,29 @@
+class Solution {
+public:
+    string repeatLimitedString(string s, int l) {
+        unordered_map<char, int> mp;
+        for (char c : s) mp[c]++;
+        priority_queue<pair<char, int>> pq;
+        for (auto& pair : mp) pq.push({pair.first, pair.second});
+        string str = "";
+        while (!pq.empty()) {
+            auto [c, freq] = pq.top();
+            pq.pop();
+            if (str.empty() || str.back() != c) {
+                int t = min(l, freq);
+                str.append(t, c);
+                freq -= t;
+                if (freq > 0) pq.push({c, freq});
+            } else {
+                if (pq.empty()) break; 
+                auto [c2, freq2] = pq.top();
+                pq.pop();
+                str += c2;
+                freq2--;
+                if (freq2 > 0) pq.push({c2, freq2});
+                pq.push({c, freq});
+            }
+        }
+        return str;
+    }
+};
