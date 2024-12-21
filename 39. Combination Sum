@@ -1,0 +1,20 @@
+class Solution {
+public:
+    void solve(int i, int sum, int target, vector<int>& candt, vector<int>& curr, vector<vector<int>>& ans) {
+        if(sum == target) {
+            ans.push_back(curr) ;
+            return ;
+        }
+        if(sum > target || i >= candt.size()) return ;
+        curr.push_back(candt[i]) ;
+        solve(i, sum + candt[i], target, candt, curr, ans) ;
+        curr.pop_back() ;
+        solve(i+1, sum, target, candt, curr, ans) ;
+    } 
+    vector<vector<int>> combinationSum(vector<int>& candt, int target) {
+        vector<vector<int>> ans ;
+        vector<int> curr ;
+        solve(0, 0, target, candt, curr, ans) ;
+        return ans ;   
+    }
+};
