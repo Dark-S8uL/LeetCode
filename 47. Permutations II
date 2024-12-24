@@ -1,0 +1,30 @@
+class Solution {
+public:
+    void solve(int idx, vector<int>& nums, vector<vector<int>>& v) {
+        if (idx == nums.size()) {
+            v.push_back(nums) ;
+            return ;
+        }
+        for (int i = idx; i < nums.size(); i++) {
+            swap(nums[idx], nums[i]) ;
+            solve(idx + 1, nums, v) ;
+            swap(nums[idx], nums[i]) ;
+        }
+    }
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<vector<int>> v ;
+        solve(0, nums, v) ;
+        sort(v.begin(), v.end()) ;
+        vector<vector<int>> ans ;
+        vector<int> dup = v[0] ;
+        for(int i = 1; i < v.size(); i++){
+            if(dup == v[i]) continue ;
+            else {
+                ans.push_back(dup) ;
+                dup = v[i] ;
+            }
+        }
+        if(dup == v.back()) ans.push_back(dup) ;
+        return ans ;
+    }
+};
