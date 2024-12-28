@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& mat) {
+        int m = mat.size(), n = mat[0].size() ;
+        vector<int> v;
+        if (mat.empty()) return v;
+        int t = 0, b = m-1;
+        int l = 0, r = n-1;
+        while(t <= b && l <= r) {
+            for(int i = l; i <= r; i++) v.push_back(mat[t][i]);
+            t++;
+            for(int i = t; i <= b; i++) v.push_back(mat[i][r]);
+            r--;
+            if(t <= b) {
+                for(int i = r; i >= l; i--) v.push_back(mat[b][i]);
+                b--;
+            }
+            if(l <= r) {
+                for(int i = b; i >= t; i--) v.push_back(mat[i][l]);
+                l++;
+            }
+        }
+        return v;
+    }
+};
