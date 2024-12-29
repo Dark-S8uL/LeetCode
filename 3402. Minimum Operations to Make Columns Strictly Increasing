@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int minimumOperations(vector<vector<int>>& grid) {
+        int m = grid.size(), n = grid[0].size() ;
+        int cnt = 0 ;;
+        for(int i = 0; i < n; i++){
+            for(int j = 1; j < m; j++){
+                if(grid[j-1][i] >= grid[j][i]){
+                    int a = grid[j-1][i] + 1 ;
+                    cnt += a - grid[j][i] ;
+                    grid[j][i] = a ;
+                }
+            }
+        }
+        return cnt ;
+
+    }
+};
