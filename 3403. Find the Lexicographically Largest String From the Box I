@@ -1,0 +1,27 @@
+class Solution {
+public:
+    string answerString(string word, int nf) {
+        int n = word.length();
+        if(nf == 1) return word;
+        if(n == nf) return string(1, *max_element(word.begin(), word.end()));
+        nf--;
+        int p = (n - nf);
+        vector<string> v;
+        vector<int> str(n);
+        for(int i =0 ; i < n-p+1; i++){
+            int a = word[i]-'a';
+            str[i] = a;
+        }
+        for(int i = 0; i < n; i++){
+            int idx = i, z = p;
+            string s;
+            while(idx < n && z--){
+                s += word[idx];
+                idx += 1;
+            }
+            v.push_back(s);    
+        }
+        sort(v.rbegin(), v.rend());
+        return v[0];
+    }
+};
