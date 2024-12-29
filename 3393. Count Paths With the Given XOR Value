@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int t[301][301][16] ;
+    int mod = 1e9 + 7 ;
+    long long solve(int i, int j, int m, int n, int val, vector<vector<int>>& grid, int k){
+        if(i >= m || j >= n) return 0 ;
+        if(i == m-1 && j == n-1) return (val ^ grid[i][j]) == k ? 1 : 0 ;
+        if(t[i][j][val] != -1) return t[i][j][val] ;
+        long long r = solve(i, j+1, m, n, val ^ grid[i][j], grid, k) ;
+        long long d = solve(i+1, j, m, n, val ^ grid[i][j], grid, k) ;
+        return t[i][j][val] = (r + d) % mod ;
+    }
+    int countPathsWithXorValue(vector<vector<int>>& grid, int k) {
+        int m = grid.size(), n = grid[0].size() ;
+        memset(t, -1, sizeof(t)) ;
+        return solve(0, 0, m, n, 0, grid, k) ;
+    }
+};
