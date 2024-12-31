@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int t[366] ;
+    int solve(int i, vector<int>& days, vector<int>& costs) {
+        if (i >= days.size()) return 0 ; 
+        if (t[i] != -1) return t[i] ; 
+        int a = costs[0] + solve(i + 1, days, costs) ;
+
+        int j = i ;
+        while (j < days.size() && days[j] < days[i] + 7) j++ ;
+        int b = costs[1] + solve(j, days, costs) ;
+
+        j = i ;
+        while (j < days.size() && days[j] < days[i] + 30) j++ ;
+        int c = costs[2] + solve(j, days, costs) ; 
+
+        return t[i] = min(a, min(b, c)) ;
+    }
+    int mincostTickets(vector<int>& days, vector<int>& costs) {
+        memset(t, -1, sizeof(t)) ; 
+        return solve(0, days, costs) ;
+    }
+};
