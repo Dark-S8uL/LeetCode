@@ -1,0 +1,17 @@
+class Solution {
+public:
+    vector<string> stringMatching(vector<string>& w) {
+        int n = w.size() ;
+        sort(w.begin(), w.end()) ;
+        vector<string> v ;
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (i != j && w[j].find(w[i]) != string::npos) {
+                    v.push_back(w[i]);
+                    break ;
+                }
+            }
+        }
+        return v ;
+    }
+};
