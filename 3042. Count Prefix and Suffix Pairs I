@@ -1,0 +1,24 @@
+class Solution {
+public:
+    bool isPandS(string& a, string& b){
+        int n1 = a.length(), n2 = b.length() ;
+        if(n1 > n2) return false ;
+        for(int i = 0; i < n1; i++){
+            if(a[i] != b[i]) return false ;
+        }
+        for(int i = 0; i < n1; ++i) {
+            if(a[n1-1-i] != b[n2-1-i]) return false;
+        }
+        return true ;
+    }
+    int countPrefixSuffixPairs(vector<string>& w) {
+        int n = w.size() ;
+        int cnt = 0 ;
+        for(int i = 0; i < n-1; i++){
+            for(int j = i+1; j < n; j++){
+                if(isPandS(w[i], w[j])) cnt++ ;
+            }
+        }
+        return cnt ;
+    }
+};
