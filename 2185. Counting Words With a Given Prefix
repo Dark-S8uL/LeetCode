@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int prefixCount(vector<string>& w, string p) {
+        int n = w.size(), m = p.length() ;
+        int cnt = 0 ;
+        for(int i = 0; i < n; i++){
+            if(w[i][0] == p[0]){
+                int j = 0 ;
+                while(j < m){
+                    if(w[i][j] != p[j]) break ;
+                    j++ ;
+                }
+                if(j == m) cnt++ ;
+            }
+        }
+        return cnt ;
+    }
+};
