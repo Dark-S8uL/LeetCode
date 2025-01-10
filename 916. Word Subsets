@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<string> wordSubsets(vector<string>& w1, vector<string>& w2) {
+        int m = w1.size(), n = w2.size() ;
+        vector<int> maxF(26, 0) ;
+        for(string& s : w2){
+            vector<int> freq(26, 0) ;
+            for(char c : s) freq[c - 'a']++ ;
+            for(int i = 0; i < 26; i++) maxF[i] = max(maxF[i], freq[i]) ;
+        }
+        vector<string> v ;
+        for(string& s : w1){
+            vector<int> freq(26, 0) ;
+            for(char c : s) freq[c - 'a']++ ;
+            bool f = true ;
+            for(int i = 0; i < 26; i++) {
+                if(freq[i] < maxF[i]) {
+                    f = false ;
+                    break ;
+                }
+            }
+            if(f) v.push_back(s) ;
+        }
+        return v ;
+    }
+};
