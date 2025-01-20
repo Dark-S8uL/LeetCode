@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int solve(int m, int n,string &w1, string &w2, vector<vector<int>> &t){
+        if(m < 0) return n+1;
+        if(n < 0) return m+1;
+        if(t[m][n] != -1) return t[m][n];
+        if(w1[m] == w2[n]) return solve(m-1, n-1, w1, w2, t);
+        int mini = min(1 + solve(m, n-1, w1, w2, t), 1 + solve(m-1, n, w1, w2, t));
+        return t[m][n] = min(1 + solve(m-1, n-1, w1, w2, t), mini);
+    }
+    int minDistance(string w1, string w2) {
+        int m = w1.size(), n = w2.size();
+        vector<vector<int>> t(m+1, vector<int>(n+1, -1));
+        return solve(m-1, n-1, w1, w2, t);
+    }
+};
