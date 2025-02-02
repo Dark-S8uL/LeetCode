@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int t[101][101] ;
+    bool solve(int i, int j, int n1, int n2, string& s1, string& s2, string& s3) {
+        if(i == n1 && j == n2) return true ;
+        if(t[i][j] != -1) return t[i][j] ;
+        if(i < n1 && s1[i] == s3[i + j] && solve(i + 1, j, n1, n2, s1, s2, s3)) return t[i][j] = true ;
+        if(j < n2 && s2[j] == s3[i + j] && solve(i, j + 1, n1, n2, s1, s2, s3)) return t[i][j] = true ; 
+        return t[i][j] = false ;
+    }
+    bool isInterleave(string s1, string s2, string s3) {
+        int n1 = s1.length(), n2 = s2.length(), m = s3.length() ;
+        if(n1 + n2 != m) return false ;
+        memset(t, -1, sizeof(t)) ;
+        return solve(0, 0, n1, n2, s1, s2, s3) ;
+    }
+};
