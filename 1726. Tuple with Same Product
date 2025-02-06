@@ -1,0 +1,41 @@
+# Approach 01 :
+
+class Solution {
+public:
+    int tupleSameProduct(vector<int>& nums) {
+        int n = nums.size() ;
+        if(n < 4) return 0 ;
+        unordered_map<int, int> mp ;
+        for(int i = 0; i < n-1; i++) {
+            for(int j = i+1; j < n; j++) {
+                mp[nums[i] * nums[j]]++ ;
+            }
+        }
+        int cnt = 0 ;
+        for(auto& pair : mp) {
+            if(pair.second > 1) cnt += (4 * pair.second * (pair.second - 1)) ;
+        }
+        return cnt ;
+    }
+};
+
+-------------------------------------------------------------------------------------
+# Approach 02 :
+
+class Solution {
+public:
+    int tupleSameProduct(vector<int>& nums) {
+        int n = nums.size() ;
+        if(n < 4) return 0 ;
+        unordered_map<int, int> mp ;
+        int cnt = 0;
+        for (int i = 0; i < n-1; i++) {
+            for (int j = i+1; j < n; j++) {
+                int product = nums[i] * nums[j] ;
+                cnt += 8 * mp[product] ;
+                mp[product]++ ;
+            }
+        }
+        return cnt;
+    }
+};
