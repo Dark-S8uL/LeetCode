@@ -1,0 +1,27 @@
+class NumberContainers {
+public:
+    unordered_map<int, priority_queue<int, vector<int>, greater<int>>> pq ;
+    unordered_map<int, int> mp ;
+
+    NumberContainers() {}
+    
+    void change(int idx, int num) {
+        if(mp.count(idx) && mp[idx] == num) return ;
+        mp[idx] = num ;
+        pq[num].push(idx) ;
+    }
+    
+    int find(int num) {
+        if(!pq.count(num)) return -1 ;
+        auto &q = pq[num] ;
+        while(!q.empty() && mp[q.top()] != num) q.pop() ;
+        return q.empty() ? -1 : q.top() ;
+    }
+};
+
+/**
+ * Your NumberContainers object will be instantiated and called as such:
+ * NumberContainers* obj = new NumberContainers();
+ * obj->change(index,number);
+ * int param_2 = obj->find(number);
+ */
