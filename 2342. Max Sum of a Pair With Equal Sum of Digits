@@ -1,0 +1,48 @@
+# Approach 01 :
+
+class Solution {
+public:
+    int maximumSum(vector<int>& nums) {
+        int n = nums.size() ;
+        unordered_map<int, vector<int>> mp ;
+        for(int num : nums) {
+            int a = num, sum = 0 ;
+            while(a) {
+                sum += a % 10 ;
+                a /= 10 ;
+            }
+            mp[sum].push_back(num) ;
+        }
+        int maxSum = -1 ;
+        for(auto& pair : mp) {
+            if(pair.second.size() > 1) {
+                auto& v = pair.second ;
+                sort(v.begin(), v.end()) ;
+                maxSum = max(maxSum, v[v.size()-1] + v[v.size()-2]) ;
+            }
+        }
+        return maxSum ;
+    }
+};
+
+---------------------------------------------------------------------------------
+# Approach 02 :
+
+class Solution {
+public:
+    int maximumSum(vector<int>& nums) {
+        int n = nums.size() ;
+        int v[82] = {0} ;
+        int maxSum = -1 ;
+        for(int num : nums) {
+            int a = num, sum = 0 ;
+            while(a) {
+                sum += a % 10 ;
+                a /= 10 ;
+            }
+            if(v[sum]) maxSum = max(maxSum, num + v[sum]) ;
+            v[sum] = max(v[sum], num) ;
+        }
+        return maxSum ;
+    }
+};
