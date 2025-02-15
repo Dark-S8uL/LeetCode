@@ -1,0 +1,19 @@
+class Solution {
+public:
+    bool solve(int sum, int num, int i, string& s) {
+        if(i == s.size()) return sum == num;
+        for(int j = i; j < s.size(); j++) {
+            int part = stoi(s.substr(i, j - i + 1));
+            if(solve(sum + part, num, j + 1, s)) return true;
+        }
+        return false;
+    }
+    int punishmentNumber(int n) {
+        int ans = 0;
+        for(int i = 1; i <= n; i++) {
+            string sq = to_string(i * i);
+            if(solve(0, i, 0, sq)) ans += i * i;
+        }
+        return ans;
+    }
+};
