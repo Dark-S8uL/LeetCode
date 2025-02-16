@@ -1,0 +1,31 @@
+class Solution {
+public:
+    bool solve(int i, int n, vector<int>& v, vector<bool>& f) {
+        while(i < v.size() && v[i] != 0) i++ ;
+        if(i == v.size()) return true ;
+        for(int j = n; j >= 1; j--) {
+            if(f[j]) continue ;
+            if(j == 1) {
+                v[i] = j ;
+                f[j] = true ;
+                if(solve(i+1, n, v, f)) return true ;
+                v[i] = 0 ;
+                f[j] = false ;
+            } else if(i + j < v.size() && v[i+j] == 0) {
+                v[i] = v[i+j] = j ;
+                f[j] = true ;
+                if(solve(i+1, n, v, f)) return true ;
+                v[i] = v[i+j] = 0 ;
+                f[j] = false ;
+            }
+        }
+        return false ;
+    }
+    vector<int> constructDistancedSequence(int n) {
+        if(n == 1) return {1} ;
+        vector<int> v(2*n-1, 0) ;
+        vector<bool> f(n+1, false) ;
+        solve(0, n, v, f) ;
+        return v ;
+    }
+};
