@@ -1,0 +1,22 @@
+class Solution {
+public:
+    string smallestNumber(string p) {
+        int n = p.size() ;
+        if(n == 1) {
+            if(p[0] == 'I') return "12" ;
+            else return "21" ;
+        }
+        string str = "" ;
+        stack<int> st ;
+        for (int i = 0; i <= n; i++) {
+            st.push(i + 1) ;
+            if (i == n || p[i] == 'I') {
+                while (!st.empty()) {
+                    str += (st.top() + '0') ;
+                    st.pop() ;
+                }
+            }
+        }
+        return str ;
+    }
+};
