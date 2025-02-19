@@ -1,0 +1,17 @@
+class Solution {
+public:
+    vector<string> v ;
+    void makeStr(int n, string s) {
+        if (s.size() == n) {
+            v.push_back(s) ;
+            return ;
+        }
+        for (char c : {'a', 'b', 'c'}) {
+            if (s.empty() || s.back() != c) makeStr(n, s + c) ;
+        }
+    }
+    string getHappyString(int n, int k) {
+        makeStr(n, "") ;
+        return k > v.size() ? "" : v[k - 1] ;
+    }
+};
