@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int solve(string& t, vector<bool>& v) {
+        int cnt = 0 ;
+        for (int i = 0; i < t.size(); i++) {
+            if (v[i] || (i > 0 && t[i] == t[i - 1] && !v[i - 1])) continue ;
+            v[i] = true ;
+            cnt += 1 + solve(t, v) ;
+            v[i] = false ;
+        }
+        return cnt ;
+    }
+    int numTilePossibilities(string t) {
+        int n = t.size() ;
+        sort(t.begin(), t.end()) ;
+        vector<bool> v(t.size(), false) ;
+        return solve(t, v) ;
+    }
+};
