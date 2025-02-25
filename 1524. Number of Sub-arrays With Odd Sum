@@ -1,0 +1,41 @@
+# Approach 01 :
+
+class Solution {
+public: 
+    int mod = 1e9 + 7 ;
+    int numOfSubarrays(vector<int>& arr) {
+        int n = arr.size() ;
+        long long odd = 0, sum = 0 ;
+        for(int a : arr) {
+            sum += a ;
+            odd += sum % 2 ;
+        }
+        odd += (n - odd) * odd ;
+        return odd % mod ;
+    }
+};
+
+
+---------------------------------------------------------------------------
+# Approach 02 :
+
+class Solution {
+public: 
+    int mod = 1e9 + 7 ;
+    int numOfSubarrays(vector<int>& arr) {
+        int n = arr.size() ;
+        int odd = 0, even = 1 ;
+        int sum = 0, ans = 0 ;
+        for(int a : arr) {
+            sum += a ;
+            if(sum % 2 == 0) {
+                ans = (ans + odd) % mod ;
+                even++ ;
+            } else {
+                ans = (ans + even) % mod ;
+                odd++ ;
+            }
+        }
+        return ans % mod ;
+    }
+};
