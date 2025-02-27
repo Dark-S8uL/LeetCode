@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int solve(int a, int b, vector<int>& arr, unordered_map<int, int>& mp) {
+        int cnt = 2 ;
+        int c = a + b ;
+        while(mp.find(c) != mp.end()) {
+            cnt++ ;
+            a = b ;
+            b = c ;
+            c = a + b ;
+        }
+        return cnt == 2 ? 0 : cnt ;
+    }
+    int lenLongestFibSubseq(vector<int>& arr) {
+        int n = arr.size() ;
+        unordered_map<int, int> mp ;
+        for(int i = 0; i < n; i++) mp[arr[i]] = i ;
+        int maxLen = 0 ;
+        for(int i = 0; i < n; i++) {
+            for(int j = i+1; j < n; j++) {
+                int a = arr[i], b = arr[j] ;
+                int cnt = solve(a, b, arr, mp) ;
+                maxLen = max(maxLen, cnt) ;
+            }
+        }
+        return maxLen ;
+    }
+};
