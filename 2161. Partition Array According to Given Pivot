@@ -1,0 +1,48 @@
+# Approach 01 :
+
+class Solution {
+public:
+    vector<int> pivotArray(vector<int>& nums, int pivot) {
+        int n = nums.size() ;
+        vector<int> v ;
+        for(int num : nums) {
+            if(num < pivot) v.push_back(num) ;
+        }
+        for(int num : nums) {
+            if(num == pivot) v.push_back(num) ;
+        }
+        for(int num : nums) {
+            if(num > pivot) v.push_back(num) ;
+        }
+        for(int i = 0; i < n; i++) nums[i] = v[i] ;
+        return nums ;
+    }
+};
+
+
+-----------------------------------------------------------------
+# Approach 02 : 
+
+class Solution {
+public:
+    vector<int> pivotArray(vector<int>& nums, int pivot) {
+        int n = nums.size() ;
+        vector<int> v(n, 0) ;
+        int l = 0, r = n - 1 ;
+        for (int i = 0, j = n - 1; i < n; i++, j--) {
+            if (nums[i] < pivot) {
+                v[l] = nums[i] ;
+                l++ ;
+            }
+            if (nums[j] > pivot) {
+                v[r] = nums[j] ;
+                r-- ;
+            }
+        }
+        while (l <= r) {
+            v[l] = pivot ;
+            l++ ;
+        }
+        return v ;
+    }
+};
