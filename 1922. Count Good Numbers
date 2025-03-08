@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int countGoodNumbers(long long n) {
+        const int mod = 1e9 + 7 ;
+        long long r1 = 1, r2 = 1 ;
+        long long oddPos = n/2, evenPos = (n+1)/2 ;
+        long long b1 = 5, b2 = 4 ;
+        while (evenPos > 0) {
+            if (evenPos % 2 == 1) {
+                r1 = (r1 * b1) % mod;
+            }
+            b1 = (b1 * b1) % mod;
+            evenPos /= 2;
+        }
+        while (oddPos > 0) {
+            if (oddPos % 2 == 1) {
+                r2 = (r2 * b2) % mod;
+            }
+            b2 = (b2 * b2) % mod;
+            oddPos /= 2;
+        }
+        long long ans = (r1 * r2) % mod ;
+        return ans % mod ;
+    }
+};
