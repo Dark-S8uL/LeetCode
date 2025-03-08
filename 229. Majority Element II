@@ -1,3 +1,5 @@
+# Approach 01 :
+
 class Solution {
 public:
     vector<int> majorityElement(vector<int>& nums) {
@@ -14,6 +16,42 @@ public:
             }
         }
         if(cnt > n/3) v.push_back(dup) ;
+        return v ;
+    }
+};
+
+---------------------------------------------------------------
+# Approach 02 : 
+
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        int n = nums.size() ;
+        int a = 0, b = 0 ;
+        int cnt1 = 0, cnt2 = 0 ;
+        for (int num : nums) {
+            if (num == a) cnt1++;
+            else if (num == b) cnt2++;
+            else if (cnt1 == 0) {
+                a = num;
+                cnt1++;
+            } else if (cnt2 == 0) {
+                b = num;
+                cnt2++;
+            } else {
+                cnt1--;
+                cnt2--;
+            }
+        }
+        cnt1 = 0;
+        cnt2 = 0;
+        for (const int num : nums) {
+            if (num == a) cnt1++;
+            else if (num == b) cnt2++;
+        }
+        vector<int> v;
+        if (cnt1 > n / 3) v.push_back(a) ;
+        if (cnt2 > n / 3) v.push_back(b) ;
         return v ;
     }
 };
