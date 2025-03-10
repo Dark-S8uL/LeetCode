@@ -1,0 +1,29 @@
+class Solution {
+public:
+    long long atleast(int k, string word) {
+        long long cnt = 0, c = 0, i = 0, n = word.size();
+        unordered_map<char, int> mp;
+        unordered_set<char> vowels = {'a', 'e', 'i', 'o', 'u'};
+        for (int j = 0; j < n; j++) {
+            char ch = word[j];
+            if (vowels.find(ch) == vowels.end()) c++;
+            mp[ch]++;
+            while (c >= k && hasAllVowels(mp)) {
+                cnt += (n - j);
+                char ch1 = word[i];
+                if (vowels.find(ch1) == vowels.end()) c--;
+                if (--mp[ch1] == 0) mp.erase(ch1);
+                i++;
+            }
+        }
+        return cnt;
+    }
+
+    bool hasAllVowels(unordered_map<char, int>& mp) {
+        return mp['a'] > 0 && mp['e'] > 0 && mp['i'] > 0 && mp['o'] > 0 && mp['u'] > 0;
+    }
+
+    long long countOfSubstrings(string word, int k) {
+        return atleast(k, word) - atleast(k + 1, word);
+    }
+};
