@@ -1,0 +1,26 @@
+class Solution {
+public:
+    bool isValid(vector<int>& candies, int n, long long k, int maxCand) {
+        long long count = 0;
+        for (int i = 0; i < n; i++) {
+            count += (candies[i] / maxCand);
+            if (count >= k) return true;
+        }
+        return false;
+    }
+    int maximumCandies(vector<int>& candies, long long k) {
+        int n = candies.size() ;
+        long long sum = accumulate(candies.begin(), candies.end(), 0LL);
+        if (sum < k) return 0;
+        int st = 1, end = *max_element(candies.begin(), candies.end());
+        int ans = 0;
+        while (st <= end) {
+            int mid = st + (end - st) / 2;
+            if (isValid(candies, n, k, mid)) {
+                ans = mid;
+                st = mid + 1;  
+            } else end = mid - 1;
+        }
+        return ans;
+    }
+};
