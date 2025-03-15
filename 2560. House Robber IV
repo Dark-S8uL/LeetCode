@@ -1,0 +1,25 @@
+class Solution {
+public:
+    bool check(vector<int>& nums, int n, long long k, int guess) {
+        int cnt = 0;
+        for (int i = 0; i < n; i++) {
+            if(nums[i] <= guess) {
+                cnt++ ;
+                i++ ;
+            }
+            if (cnt >= k) return true;
+        }
+        return false;
+    }
+    int minCapability(vector<int>& nums, int k) {
+        int n = nums.size() ;
+        int st = *min_element(nums.begin(), nums.end()), end = *max_element(nums.begin(), nums.end());
+        int ans = 0;
+        while (st < end) {
+            int mid = st + (end - st) / 2;
+            if (check(nums, n, k, mid)) end = mid;
+            else st = mid + 1; 
+        }
+        return st;
+    }
+};
