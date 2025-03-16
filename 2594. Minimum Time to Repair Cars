@@ -1,0 +1,21 @@
+class Solution {
+public:
+    bool isValid(long long t, int cars, vector<int>& ranks) {
+        long long maxCars = 0 ;
+        for(int rank : ranks) {
+            maxCars += sqrt(t / rank) ;
+            if(maxCars >= cars) return true ;
+        }
+        return false ;
+    }
+    long long repairCars(vector<int>& ranks, int cars) {
+        int n = ranks.size();
+        long long st = 1, end = (long long)*min_element(ranks.begin(), ranks.end()) * cars * cars;
+        while (st < end) {
+            long long mid = st + (end - st) / 2;
+            if (isValid(mid, cars, ranks)) end = mid ;  
+            else st = mid + 1;
+        }
+        return st;
+    }
+};
