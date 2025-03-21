@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<string> findAllRecipes(vector<string>& rec, vector<vector<string>>& ing, vector<string>& supp) {
+        int n = rec.size() ;
+        vector<string> v ;
+        unordered_map<string, int> mp ;
+        for(string& s : supp) mp[s]++ ;
+        int t = 100 ;
+        while(t--) {
+            bool flag = true ;
+            for(int i = 0; i < n; i++) {
+                if(mp.find(rec[i]) != mp.end()) continue ;
+                flag = false ;
+                bool f = true ;
+                for(int j = 0; j < ing[i].size(); j++) {
+                    if(mp.find(ing[i][j]) == mp.end()) {
+                        f = false ;
+                        break ;
+                    }
+                }
+                if(f) {
+                    mp[rec[i]]++ ;
+                    v.push_back(rec[i]) ;
+                }
+            }
+            if(flag) break ;
+        }
+        return v ;
+    }
+};
