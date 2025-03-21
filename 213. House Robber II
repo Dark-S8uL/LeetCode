@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int solve(int i, int n, vector<int>& nums, vector<int>& t) {
+        if(i >= n) return 0 ;
+        if(t[i] != -1) return t[i] ;
+        int a = solve(i+1, n, nums, t) ;
+        int b = nums[i] + solve(i+2, n, nums, t) ;
+        return t[i] = max(a, b) ;
+    }
+    int rob(vector<int>& nums) {
+        int n = nums.size() ;
+        if(n == 1) return nums[0] ;
+        else if(n == 2) return max(nums[0], nums[1]) ;
+        vector<int> t(n, -1), t1(n, -1) ;
+        int a = solve(1, n, nums, t) ;
+        int b = solve(0, n-1, nums, t1) ;
+        return max(a, b) ;
+    }
+};
