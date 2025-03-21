@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<string> v ;
+    void makePar(string s, int o, int c, int n) {
+        if(s.length() == 2 * n) {
+            v.push_back(s) ;
+            return ;
+        }
+        if(o < n) {
+            s.push_back('(') ;
+            makePar(s, o+1, c, n) ;
+            s.pop_back() ;
+        }
+        if(c < o) {
+            s.push_back(')') ;
+            makePar(s, o, c+1, n) ;
+            s.pop_back() ;
+        }
+    }
+    vector<string> generateParenthesis(int n) {
+        int o = n, c = n ;
+        string s = "" ;
+        makePar("", 0, 0, n) ;
+        return v ;
+    }
+};
