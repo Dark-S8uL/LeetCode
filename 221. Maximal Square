@@ -1,0 +1,55 @@
+# Approach 01 :
+
+class Solution {
+public:
+    int t[301][301] ;
+    int solve(int i, int j, vector<vector<char>>& mat) {
+        if(i < 0 || j < 0) return 0 ;
+        if(mat[i][j] == '0') return t[i][j] = 0 ;
+        if(t[i][j] != -1) return t[i][j] ;
+        int a = solve(i-1, j, mat) ;
+        int b = solve(i-1, j-1, mat) ;
+        int c = solve(i, j-1, mat) ;
+        return t[i][j] = min({a, b, c}) + 1 ;
+    }
+    int maximalSquare(vector<vector<char>>& mat) {
+        int m = mat.size(), n = mat[0].size() ;
+        if(m == 1 && n == 1) return mat[0][0] == '1' ;
+        memset(t, -1, sizeof(t)) ;
+        int maxi = 0 ;
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                if(mat[i][j] == '1') {
+                    int sz = solve(i, j, mat) ;
+                    maxi = max(maxi, sz) ;
+                }
+            }
+        }
+        return maxi * maxi ;
+    }
+};
+
+-----------------------------------------------------------------------------------------
+# Approach 02 :
+
+class Solution {
+public:
+    int maximalSquare(vector<vector<char>>& mat) {
+        int m = mat.size(), n = mat[0].size() ;
+        if(m == 1 && n == 1) return mat[0][0] == '1' ;
+        vector<vector<int>> v(m+1, vector<int>(n+1, 0)) ;
+        int maxi = 0 ;
+        for(int i = m-1; i >= 0; i--) {
+            for(int j = n-1; j >= 0; j--) {
+                int a = v[i+1][j] ;
+                int b = v[i+1][j+1] ;
+                int c = v[i][j+1] ;
+                if(mat[i][j] == '1') {
+                    v[i][j] = min({a, b, c}) + 1 ;
+                    maxi = max(maxi, v[i][j]) ;
+                } else v[i][j] = 0 ;
+            }
+        }
+        return maxi * maxi ;
+    }
+};
