@@ -1,0 +1,26 @@
+class Solution {
+public:
+    bool wordPattern(string p, string s) {
+        int m = p.length(), n = 0 ;
+        for(int c : s) {
+            if(c == ' ') n++ ;
+        }
+        n++ ;
+        if(m != n) return false ;
+        unordered_map<char, string> mp1 ;
+        unordered_map<string, char> mp2 ;
+        int i = 0 ;
+        for(char c : p) {
+            string str = "" ;
+            while(i < s.length() && s[i] != ' ') str += s[i++] ;
+            i++ ;
+            if(mp1.find(c) == mp1.end() && mp2.find(str) == mp2.end()) {
+                mp1[c] = str ;
+                mp2[str] = c ;
+            } else if(mp1.find(c) != mp1.end() && mp2.find(str) != mp2.end()) {
+                if(mp1[c] != str || mp2[str] != c) return false ;
+            } else return false ;
+        }
+        return true ;
+    }
+};
