@@ -1,0 +1,48 @@
+class Solution {
+public:
+    int cnt = 0 ;
+    bool isSafe(int r, int c, int n, vector<string>& q) {
+        for(int k = 0; k < n; k++) {
+            if(q[r][k] == 'Q' || q[k][c] == 'Q') return false ;
+        }
+        int i = r, j = c ;
+        while(i >= 0 && j >= 0) {
+            if(q[i][j] == 'Q') return false ;
+            i-- ;
+            j-- ;
+        }
+        i = r, j = c ;
+        while(i >= 0 && j < n) {
+            if(q[i][j] == 'Q') return false ;
+            i-- ;
+            j++ ;
+        }
+        return true ;
+
+    }
+    void solve(int i, int n, vector<string>& q) {
+        if(i >= n) {
+            cnt++ ;
+            return ;
+        }
+        for(int j = 0; j < n; j++) {
+            if(isSafe(i, j, n, q)) {
+                q[i][j] = 'Q' ;
+                solve(i+1, n, q) ;
+                q[i][j] = '.' ;
+            }
+        }
+    }
+    int totalNQueens(int n) {
+        if(n == 1) return n ;
+        if(n == 2 || n == 3) return 0 ;
+        vector<string> q(n, "") ;
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                q[i] += '.' ;
+            }
+        }
+        solve(0, n, q) ;
+        return cnt ;
+    }
+};
