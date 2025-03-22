@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int totalFruit(vector<int>& fr) {
+        int n = fr.size() ;
+        unordered_map<int, int> mp ;
+        int f = 0, maxF = 0 ;
+        int i = 0, j = 0 ;
+        while(j < n) {
+            f++ ;
+            mp[fr[j]]++ ;
+            while(i < j && mp.size() > 2) {
+                mp[fr[i]]-- ;
+                if(mp[fr[i]] == 0) mp.erase(fr[i]) ;
+                if(f > 0) f-- ;
+                i++ ;
+            }
+            maxF = max(maxF, f) ;
+            j++ ;
+        }
+        return maxF ;
+    }
+};
