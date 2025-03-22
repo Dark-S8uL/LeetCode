@@ -1,0 +1,41 @@
+class Solution {
+public:
+    void dfs(vector<vector<int>> &adj, vector<bool> &vis, int s, vector<int>& temp){
+        vis[s] = true ;
+        temp.push_back(s) ;
+        for(int x : adj[s]) {
+            if(!vis[x]) dfs(adj, vis, x, temp);
+        }
+    }
+    int countCompleteComponents(int n, vector<vector<int>>& edges) {
+        vector<vector<int>> adj(n) ;
+        vector<int> leaf(n, 0) ;
+        for(auto& edge : edges) {
+            int u = edge[0], v = edge[1] ;
+            adj[u].push_back(v) ;
+            adj[v].push_back(u) ;
+            leaf[u]++ ;
+            leaf[v]++ ;
+        }
+        vector<vector<int>> v ;
+        queue<int> q ;
+        vector<bool> vis(n, false) ;
+        for(int i = 0; i < n; i++) {
+            if(vis[i]) continue ;
+            vector<int> temp ;
+            dfs(adj, vis, i, temp) ;
+            v.push_back(temp) ;
+        }
+        int comp = 0 ;
+        for(int i = 0; i < v.size(); i++) {
+            int sz = v[i].size() ;
+            int e = 0 ;
+            for(int j = 0; j < sz; j++) {
+                e += leaf[v[i][j]] ;
+            }
+            int edge = e / 2, t = sz * (sz-1) / 2 ;
+            if(edge == t) comp++ ;
+        }
+        return comp ;
+    }
+};
