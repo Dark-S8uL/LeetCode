@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int maximumScore(vector<int>& nums, int k) {
+        int n = nums.size() ;
+        stack<int> st ;
+        vector<int> bef(n, -1), aft(n, n) ;
+        for(int i = 0; i < n; i++) {
+            if(!st.empty()){
+                while(!st.empty() && nums[st.top()] >= nums[i]) st.pop() ;
+                if(!st.empty()) bef[i] = st.top() ;
+                st.push(i) ;
+            } else st.push(i) ;
+        }
+        stack<int>().swap(st) ;
+        for(int i = n-1; i >= 0; i--) {
+            if(!st.empty()){
+                while(!st.empty() && nums[st.top()] >= nums[i]) st.pop() ;
+                if(!st.empty()) aft[i] = st.top() ;
+                st.push(i) ;
+            } else st.push(i) ;
+        }
+        int maxScore = 0 ;
+        for(int i = 0; i < n; i++) {
+            int l = bef[i]+1, r = aft[i]-1 ;
+            if(l <= k && k <= r) {
+                int w = r - l + 1 ;
+                maxScore = max(maxScore, w * nums[i]) ;
+            }
+        }
+        return maxScore ;
+    }
+};
