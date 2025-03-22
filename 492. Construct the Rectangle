@@ -1,0 +1,13 @@
+class Solution {
+public:
+    vector<int> constructRectangle(int area) {
+        int i = sqrt(area), j = sqrt(area) ;
+        while(j > 1) {
+            int a = i * j ;
+            if(a == area) return {i, j} ;
+            else if(a < area) i++ ;
+            else j-- ;
+        }
+        return {area, 1} ;
+    }
+};
