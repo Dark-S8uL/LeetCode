@@ -1,0 +1,107 @@
+# Approach 01 : 
+
+class Spreadsheet {
+public:
+    vector<vector<int>> v ;
+    Spreadsheet(int rows) {
+        v = vector<vector<int>>(rows, vector<int>(26, 0)) ;
+    }
+    
+    void setCell(string cell, int value) {
+        int c = cell[0] - 'A' ;
+        int r = stoi(cell.substr(1)) - 1 ;
+        v[r][c] = value ;
+    }
+    
+    void resetCell(string cell) {
+        int c = cell[0] - 'A' ;
+        int r = stoi(cell.substr(1)) - 1 ;
+        v[r][c] = 0 ;
+    }
+    
+    int getValue(string formula) {
+        int n = formula.length() ;
+        string s1 = "", s2 = "" ;
+        bool f = false ;
+        for(int i = 1; i < n; i++) {
+            if(formula[i] == '+') f = true ;
+            else if(!f) s1 += formula[i] ;
+            else if(f) s2 += formula[i] ;
+        }
+        if((s1[0] >= 'A' && s1[0] <= 'Z') && (s2[0] >= 'A' && s2[0] <= 'Z')) {
+            int b = s1[0] - 'A', a = stoi(s1.substr(1)) - 1 ;
+            int d = s2[0] - 'A', c = stoi(s2.substr(1)) - 1 ;
+            return v[a][b] + v[c][d] ;
+        } else if(s1[0] >= 'A' && s1[0] <= 'Z') {
+            int b = s1[0] - 'A', a = stoi(s1.substr(1)) - 1 ;
+            int p = stoi(s2) ;
+            return v[a][b] + p ;
+        } else if(s2[0] >= 'A' && s2[0] <= 'Z') {
+            int d = s2[0] - 'A', c = stoi(s2.substr(1)) - 1 ;
+            int p = stoi(s1) ;
+            return p + v[c][d] ;
+        }
+        long long p = stoi(s1), q = stoi(s2) ;
+        return p + q ;
+    }
+};
+
+/**
+ * Your Spreadsheet object will be instantiated and called as such:
+ * Spreadsheet* obj = new Spreadsheet(rows);
+ * obj->setCell(cell,value);
+ * obj->resetCell(cell);
+ * int param_3 = obj->getValue(formula);
+ */
+
+-------------------------------------------------------------------------------------
+# Approach 02 :
+
+class Spreadsheet {
+public:
+    vector<vector<int>> v ;
+    Spreadsheet(int rows) {
+        v = vector<vector<int>>(rows, vector<int>(26, 0)) ;
+    }
+    
+    void setCell(string cell, int value) {
+        int c = cell[0] - 'A' ;
+        int r = stoi(cell.substr(1)) - 1 ;
+        v[r][c] = value ;
+    }
+    
+    void resetCell(string cell) {
+        setCell(cell, 0) ;
+    }
+    
+    int getValue(string formula) {
+        int n = formula.length() ;
+        string s1 = "", s2 = "" ;
+        int i ;
+        for(i = 1; i < n; i++) {
+            if(formula[i] == '+') break ;
+            s1 += formula[i] ;
+        }
+        s2 += formula.substr(i+1) ;
+        if((s1[0] >= 'A' && s1[0] <= 'Z') && (s2[0] >= 'A' && s2[0] <= 'Z')) {
+            int b = s1[0] - 'A', a = stoi(s1.substr(1)) - 1 ;
+            int d = s2[0] - 'A', c = stoi(s2.substr(1)) - 1 ;
+            return v[a][b] + v[c][d] ;
+        } else if(s1[0] >= 'A' && s1[0] <= 'Z') {
+            int b = s1[0] - 'A', a = stoi(s1.substr(1)) - 1 ;
+            return v[a][b] + stoi(s2) ;
+        } else if(s2[0] >= 'A' && s2[0] <= 'Z') {
+            int d = s2[0] - 'A', c = stoi(s2.substr(1)) - 1 ;
+            return stoi(s1) + v[c][d] ;
+        }
+        return stoi(s1) + stoi(s2) ;
+    }
+};
+
+/**
+ * Your Spreadsheet object will be instantiated and called as such:
+ * Spreadsheet* obj = new Spreadsheet(rows);
+ * obj->setCell(cell,value);
+ * obj->resetCell(cell);
+ * int param_3 = obj->getValue(formula);
+ */
