@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int totalNumbers(vector<int>& d) {
+        int n = d.size() ;
+        unordered_set<int> st ;
+        for(int i = 0; i < n; i++) {
+            if(d[i] != 0) {
+                for(int j = 0; j < n; j++) {
+                    for(int k = 0; k < n; k++) {
+                        if((d[k] % 2 == 0) && i != j && j != k && i != k) {
+                            string str = to_string(d[i]) + to_string(d[j]) + to_string(d[k]) ;
+                            int a = stoi(str) ;
+                            st.insert(a) ;
+                        }
+                    }
+                }
+            }
+        }
+        return st.size() ;
+    }
+};
