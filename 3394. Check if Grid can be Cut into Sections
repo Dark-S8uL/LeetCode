@@ -1,0 +1,23 @@
+class Solution {
+public: 
+    bool checkCut(vector<pair<int, int>>& v) {
+        sort(v.begin(), v.end()) ;
+        int cuts = 0 ;
+        int maxX = v[0].second ;
+        for(int i = 0; i < v.size(); i++) {
+            int s = v[i].first, e = v[i].second ;
+            if(maxX <= s) cuts++ ;
+            maxX = max(maxX, e) ; 
+        }
+        return cuts >= 2 ;
+    }
+    bool checkValidCuts(int n, vector<vector<int>>& rectangles) {
+        vector<pair<int, int>> x, y ;
+        for(auto& rect : rectangles) {
+            int x1 = rect[0], y1 = rect[1], x2 = rect[2], y2 = rect[3] ;
+            x.push_back({x1, x2}) ;
+            y.push_back({y1, y2}) ;
+        }
+        return checkCut(x) || checkCut(y) ;
+    }
+};
