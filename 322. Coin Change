@@ -1,0 +1,14 @@
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int amt) {
+        int n = coins.size() ;
+        vector<int> v(amt+1, amt+1) ;
+        v[0] = 0 ;
+        for(int i = 1; i <= amt; i++) {
+            for(int j = 0; j < n; j++) {
+                if(i - coins[j] >= 0) v[i] = min(v[i], 1 + v[i-coins[j]]) ;
+            }
+        }
+        return v[amt] == amt+1 ? -1 : v[amt] ;
+    }
+};
