@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int t[301][5001] ;
+    int solve(int i, int n, vector<int>& coins, int amt) {
+        if(i >= n || amt <= 0) return amt == 0 ? 1 : 0 ;
+        if(t[i][amt] != -1) return t[i][amt] ;
+        int res = 0 ;
+        if(amt >= coins[i]) {
+            res = solve(i, n, coins, amt - coins[i]) + solve(i+1, n, coins, amt) ;
+        } else res = solve(i+1, n, coins, amt) ;
+        return t[i][amt] = res ;
+    }
+    int change(int amt, vector<int>& coins) {
+        int n = coins.size() ;
+        if(amt == 0) return 1 ;
+        memset(t, -1, sizeof(t)) ;
+        return solve(0, n, coins, amt) ;
+    }
+};
