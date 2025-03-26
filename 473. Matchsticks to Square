@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool solve(int i, vector<int>& mat, vector<int>& v, int s) {
+        if(i >= mat.size()) return v[0] == v[1] && v[1] == v[2] && v[2] == v[3] ;
+        for(int j = 0; j < 4; j++) {
+            if(v[j] + mat[i] > s) continue ;
+            v[j] += mat[i] ;
+            if(solve(i+1, mat, v, s)) return true ;
+            v[j] -= mat[i] ;
+            if(v[j] == 0) break ;
+        }
+        return false ;
+    }
+    bool makesquare(vector<int>& mat) {
+        int n = mat.size() ;
+        sort(mat.rbegin(), mat.rend()) ;
+        int sum = accumulate(mat.begin(), mat.end(), 0) ;
+        if(sum % 4 != 0) return false ;
+        int s = sum / 4 ;
+        vector<int> v(4, 0) ;
+        return solve(0, mat, v, s) ;
+    }
+};
