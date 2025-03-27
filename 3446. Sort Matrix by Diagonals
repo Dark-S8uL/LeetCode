@@ -1,0 +1,44 @@
+class Solution {
+public:
+    vector<vector<int>> v ;
+    void addDiag(int r, int c, int n, vector<int>& temp, vector<vector<int>>& grid) {
+        while(r < n && c < n) {
+            temp.push_back(grid[r][c]) ;
+            r++ ;
+            c++ ;
+        }
+    }
+    void rep(int r, int c, int n, vector<int>& temp, vector<vector<int>>& grid) {
+        int i = 0 ;
+        while(r < n && c < n) {
+            grid[r][c] = temp[i++] ;
+            r++ ;
+            c++ ;
+        }
+    }
+    vector<vector<int>> sortMatrix(vector<vector<int>>& grid) {
+        int n = grid.size() ;
+        for(int c = n-1; c >= 0; c--) {
+            vector<int> temp ;
+            addDiag(0, c, n, temp, grid) ;
+            v.push_back(temp) ;
+        }
+        for(int r = 0; r < n; r++) {
+            vector<int> temp ;
+            addDiag(r, 0, n, temp, grid) ;
+            v.push_back(temp) ;
+        }
+        for(int i = 0; i < n-1; i++) sort(v[i].begin(), v[i].end()) ;
+        for(int i = n; i < v.size(); i++) sort(v[i].rbegin(), v[i].rend()) ;
+        int i = 0 ;
+        for(int c = n-1; c >= 0; c--) {
+            rep(0, c, n, v[i], grid) ;
+            i++ ;
+        }
+        for(int r = 0; r < n; r++) {
+            rep(r, 0, n, v[i], grid) ;
+            i++ ;
+        }
+        return grid ;
+    }
+};
