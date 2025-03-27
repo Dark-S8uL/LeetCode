@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int maxDifference(string s) {
+        int n = s.length() ;
+        unordered_map<int, int> mp ;
+        for(char c : s) mp[c]++ ;
+        int diff = INT_MIN ;
+        for(auto& pair1 : mp) {
+            if(pair1.second % 2 != 0) {
+                for(auto& pair2 : mp) {
+                    if(pair2.second % 2 == 0) diff = max(diff, pair1.second - pair2.second) ;
+                }
+            }
+        }
+        return diff ;
+    }
+};
