@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int maxFreeTime(int et, int k, vector<int>& s, vector<int>& e) {
+        int n = s.size() ;
+        vector<int> diff ;
+        diff.push_back(s[0] - 0) ;
+        for(int i = 1; i < n; i++) {
+            diff.push_back(s[i] - e[i-1]) ;
+        }
+        diff.push_back(et - e[n-1]) ;
+        int maxi = 0, sum = 0 ;
+        int i = 0 ;
+        for(int j = 0; j < diff.size(); j++) {
+            sum += diff[j] ;
+            if(j-i+1 == k+1) {
+                maxi = max(maxi, sum) ;
+                sum -= diff[i++] ;
+            }
+        }
+        return maxi ;
+    }
+};
