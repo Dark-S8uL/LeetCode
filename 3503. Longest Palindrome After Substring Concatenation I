@@ -1,0 +1,33 @@
+class Solution {
+public:
+    bool isP(string& str) {
+        int l = 0, r = str.length() - 1 ;
+        while(l < r) {
+            if(str[l] != str[r]) return false ;
+            l++ ;
+            r-- ;
+        }
+        return true ;
+    }
+    int longestPalindrome(string s, string t) {
+        int m = s.length(), n = t.length() ;
+        int maxi = 1 ;
+        for(int i = 0; i < m; i++) {
+            for(int j = i; j <= m; j++) {
+                string x = (i < j) ? s.substr(i, j-i) : "" ;
+                for(int k = 0; k < n; k++) {
+                    for(int l = k; l <= n; l++) {
+                        string y = (k < l) ? t.substr(k, l-k) : "" ;
+                        string p = x+y ;
+                        bool f = isP(p) ;
+                        if(!p.empty() && f) {
+                            int len = p.length() ;
+                            maxi = max(maxi, len) ;
+                        }
+                    }
+                }
+            }
+        }
+        return maxi ;
+    }
+};
