@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int maxFreeTime(int et, vector<int>& s, vector<int>& e) {
+        int n = s.size() ;
+        vector<int> v ;
+        v.push_back(s[0] - 0) ;
+        for(int i = 1; i < n; i++) {
+            v.push_back(s[i] - e[i-1]) ;
+        }
+        v.push_back(et - e[n-1]) ;
+        int m = v.size() ;
+        vector<int> r(m, 0) ;
+        for(int i = m-2; i >= 0; i--) {
+            r[i] = max(r[i+1], v[i+1]) ;
+        } 
+        int maxi = 0, l = 0 ;
+        for(int i = 1; i < m; i++) {
+            int curr = e[i-1] - s[i-1] ;
+            int g = max(l, r[i]) ;
+            if(curr <= g) maxi = max(maxi, v[i-1] + curr + v[i]) ;
+            else maxi = max(maxi, v[i-1] + v[i]) ;
+            l = max(l, v[i-1]) ;
+        }
+        return maxi ;
+    }
+};
