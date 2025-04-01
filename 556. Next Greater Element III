@@ -1,0 +1,10 @@
+class Solution {
+public:
+    string s1 = to_string(INT_MAX-1) ;
+    int nextGreaterElement(int n) {
+        string s = to_string(n) ;
+        if(!next_permutation(s.begin(), s.end())) return -1 ;
+        long long a = stoll(s) ;
+        return a > INT_MAX ? -1 : (int)a ;
+    }
+};
