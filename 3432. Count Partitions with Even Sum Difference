@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int countPartitions(vector<int>& nums) {
+        int n = nums.size() ;
+        vector<int> pref(n) ;
+        pref[0] = nums[0] ;
+        for(int i = 1; i < n; i++) pref[i] = pref[i-1] + nums[i] ;
+        int cnt = 0, suf = 0 ;
+        for(int i = n-1; i > 0; i--) {
+            suf += nums[i] ;
+            int d = abs(pref[i-1] - suf) ;
+            if(d % 2 == 0) cnt++ ;
+        }
+        return cnt ;
+    }
+};
