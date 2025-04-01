@@ -1,0 +1,13 @@
+class Solution {
+public:
+    long long solve(int i, int n, vector<vector<int>>& qs, vector<long long>& t) {
+        if(i >= n) return 0 ;
+        if(t[i] != -1) return t[i] ;
+        return t[i] = max(solve(i+1, n, qs, t), qs[i][0] + solve(i+1+qs[i][1], n, qs, t)) ;
+    }
+    long long mostPoints(vector<vector<int>>& qs) {
+        int n = qs.size() ;
+        vector<long long> t(n, -1) ;
+        return solve(0, n, qs, t) ;
+    }
+};
