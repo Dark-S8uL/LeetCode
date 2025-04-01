@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int mod = 1e9 + 7 ;
+    long long solve(int i, int l, vector<vector<long long >>& t) {
+        if(i == 0 || l == 1) return 1 ;
+        if(t[i][l] != -1) return t[i][l] ;
+        return t[i][l] = (solve(i-1, l, t) + solve(i-1, l-1, t)) % mod ;
+    }
+    int minMaxSums(vector<int>& nums, int k) {
+        long long n = nums.size() ;
+        if(k == 1) {
+            long long sum = accumulate(nums.begin(), nums.end(), 0LL) ;
+            return (2LL * sum) % mod ;
+        }
+        vector<vector<long long>> t(n+1, vector<long long>(k+1, -1)) ;
+        sort(nums.begin(), nums.end()) ;
+        long long ans = 0 ;
+        for(int i = 0; i < n; i++) {
+            long long maxi = (nums[i] * solve(i, k, t)) % mod ;
+            long long mini = (nums[i] * solve(n-1-i, k, t)) % mod ;
+            ans = (ans + mini + maxi) % mod ;
+        }
+        return ans ;
+    }
+};
