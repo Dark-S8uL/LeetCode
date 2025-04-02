@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int solve(int i, int j, int m, int n, vector<vector<int>>& coins, int cnt, vector<vector<vector<int>>>& t) {
+        if(i == m-1 && j == n-1) {
+            if(cnt > 0 && coins[i][j] < 0) return 0 ;
+            return coins[i][j] ;
+        }
+        if(i >= m || j >= n) return INT_MIN ;
+        if(t[i][j][cnt] != INT_MIN) return t[i][j][cnt] ;
+        int res1 = INT_MIN, res2 = INT_MIN ;
+        int a = solve(i+1, j, m, n, coins, cnt, t) ;
+        int b = solve(i, j+1, m, n, coins, cnt, t) ;
+        res1 = coins[i][j] + max(a, b) ;
+        if(coins[i][j] < 0 && cnt > 0) { 
+            int c = solve(i+1, j, m, n, coins, cnt-1, t) ;
+            int d = solve(i, j+1, m, n, coins, cnt-1, t) ;
+            res2 = max(c, d) ;
+        } 
+        return t[i][j][cnt] = max(res1, res2) ;
+    }
+    int maximumAmount(vector<vector<int>>& coins) {
+        int m = coins.size(), n = coins[0].size() ;
+        vector<vector<vector<int>>> t(m, vector<vector<int>>(n, vector<int>(3, INT_MIN))) ;
+        return solve(0, 0, m, n, coins, 2, t) ;
+    }
+};
