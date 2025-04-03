@@ -1,0 +1,16 @@
+class Solution {
+public:
+    long long maximumTripletValue(vector<int>& nums) {
+        int n = nums.size() ;
+        vector<int> pref(n, nums[0]), suff(n, nums[n-1]) ;
+        for(int i = 1; i < n; i++) pref[i] = max(pref[i-1], nums[i]) ;
+        for(int i = n-2; i >= 0; i--) suff[i] = max(suff[i+1], nums[i]) ;
+        long long maxi = INT_MIN ;
+        for(int i = 1; i < n-1; i++) {
+            long long a = (long long)(pref[i-1] - nums[i]) * (long long)suff[i+1] ;
+            maxi = max(maxi, a) ;
+        }
+        if(maxi < 0) return 0 ;
+        return maxi ;
+    }
+};
