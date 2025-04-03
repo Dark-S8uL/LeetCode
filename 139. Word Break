@@ -1,0 +1,20 @@
+class Solution {
+public:
+    bool solve(string s, unordered_set<string>& dict, unordered_map<string, bool>& mp) {
+        if(s == "") return true ;
+        if(mp.find(s) != mp.end()) return mp[s] ;
+        if(dict.find(s) != dict.end()) return true ;
+        for(int i = 1; i < s.size(); i++) {
+            string l = s.substr(0, i), r = s.substr(i) ;
+            if(dict.find(l) != dict.end() && solve(r, dict, mp)) {
+                return mp[s] = true ;
+            }
+        }
+        return mp[s] = false ;
+    }
+    bool wordBreak(string s, vector<string>& wordDict) {
+        unordered_set<string> dict(wordDict.begin(), wordDict.end()) ;
+        unordered_map<string, bool> mp ;
+        return solve(s, dict, mp) ;
+    }
+};
