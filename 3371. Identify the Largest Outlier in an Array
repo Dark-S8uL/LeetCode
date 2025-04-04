@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int getLargestOutlier(vector<int>& nums) {
+        int n = nums.size() ;
+        unordered_map<int, int> mp ;
+        for(int num : nums) mp[num]++ ;
+        int sum = accumulate(nums.begin(), nums.end(), 0) ;
+        int maxi = INT_MIN ;
+        for(int i = 0; i < n; i++) {
+            int a = sum - nums[i] ;
+            mp[nums[i]]-- ;
+            if(mp[nums[i]] == 0) mp.erase(nums[i]) ;
+            int b = (a/2) ;
+            if(((a-b) == b) && mp.find(b) != mp.end()) maxi = max(maxi, nums[i]) ;
+            mp[nums[i]]++ ;
+        }
+        return maxi ;
+    }
+};
