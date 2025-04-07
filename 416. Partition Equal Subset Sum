@@ -1,0 +1,21 @@
+class Solution {
+public:
+    bool solve(int i, int n, vector<int>& nums, int sum, vector<vector<int>>& t) {
+        if(i >= n) return sum == 0 ;
+        if(sum == 0) return true ;
+        if(t[i][sum] != -1) return t[i][sum] ;
+        if(nums[i] <= sum) {
+            return t[i][sum] = solve(i+1, n, nums, sum-nums[i], t) || solve(i+1, n, nums, sum, t) ;
+        }
+        return t[i][sum] = solve(i+1, n, nums, sum, t) ;
+    }
+    bool canPartition(vector<int>& nums) {
+        int n = nums.size() ;
+        sort(nums.begin(), nums.end()) ;
+        int sum = accumulate(nums.begin(), nums.end(), 0) ;
+        if(sum % 2 != 0) return false ;
+        sum /= 2 ;
+        vector<vector<int>> t(n+1, vector<int>(sum+1, -1)) ;
+        return solve(0, n, nums, sum, t) ;
+    }
+};
