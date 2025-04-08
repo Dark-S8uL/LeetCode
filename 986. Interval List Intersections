@@ -1,0 +1,27 @@
+class Solution {
+public:
+    vector<vector<int>> intervalIntersection(vector<vector<int>>& l1, vector<vector<int>>& l2) {
+        int m = l1.size(), n = l2.size() ;
+        if(m == 0 || n == 0) return {} ;
+        vector<vector<int>> ans ;
+        int i = 0, j = 0 ;
+        while(i < m && j < n) {
+            if(l1[i][0] > l2[j][1]) {
+                j++ ;
+                continue ;
+            } else if(l2[j][0] > l1[i][1]) {
+                i++ ;
+                continue ;
+            }
+            vector<int> temp ;
+            int a = max(l1[i][0], l2[j][0]) ;
+            temp.push_back(a) ;
+            int b = min(l1[i][1], l2[j][1]) ;
+            temp.push_back(b) ;
+            if(b == l1[i][1]) i++ ;
+            else j++ ;
+            ans.push_back(temp) ;
+        }
+        return ans ;
+    }
+};
