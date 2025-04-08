@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool solve(int i, vector<int>& nums, vector<int>& v, int s, int k) {
+        if(i >= nums.size()) return v[0] == v[k-1] ;
+        for(int j = 0; j < k; j++) {
+            if(v[j] + nums[i] > s) continue ;
+            v[j] += nums[i] ;
+            if(solve(i+1, nums, v, s, k)) return true ;
+            v[j] -= nums[i] ;
+            if(v[j] == 0) break ;
+        }
+        return false ;
+    }
+    bool canPartitionKSubsets(vector<int>& nums, int k) {
+        int n = nums.size() ;
+        sort(nums.rbegin(), nums.rend()) ;
+        int sum = accumulate(nums.begin(), nums.end(), 0) ;
+        if(sum % k != 0) return false ;
+        int s = sum / k ;
+        vector<int> v(k, 0) ;
+        return solve(0, nums, v, s, k) ;
+    }
+};
