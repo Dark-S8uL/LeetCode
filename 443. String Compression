@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int compress(vector<char>& chars) {
+        int n = chars.size() ;
+        if(n == 1) return n ;
+        int cnt = 1 ;
+        char dup = chars[0] ;
+        string s = "" ;
+        for(int i = 1; i < n; i++) {
+            if(chars[i] == dup) cnt++ ;
+            else {
+                s += dup ;
+                if(cnt > 1) s += to_string(cnt) ;
+                dup = chars[i] ;
+                cnt = 1 ;
+            }
+        }
+        if(dup == chars.back()) {
+            s += dup ;
+            if(cnt > 1) s += to_string(cnt) ;
+        }
+        chars.clear() ;
+        for(char c : s) chars.push_back(c) ;
+        return chars.size() ;
+    }
+};
