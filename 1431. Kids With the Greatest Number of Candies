@@ -1,0 +1,12 @@
+class Solution {
+public:
+    vector<bool> kidsWithCandies(vector<int>& can, int ext) {
+        int n = can.size() ;
+        int maxi = *max_element(can.begin(), can.end()) ;
+        vector<bool> v(n, false) ;
+        for(int i = 0; i < n; i++) {
+            if(can[i] + ext >= maxi) v[i] = true ;
+        }
+        return v ;
+    }
+};
