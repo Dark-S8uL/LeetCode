@@ -1,0 +1,22 @@
+class Solution {
+public:
+    bool uniqueOccurrences(vector<int>& arr) {
+        if (arr.size() <= 1) return true; 
+        sort(arr.begin(), arr.end());
+        vector<int> v;
+        int count = 1;
+        for (int i = 1; i < arr.size(); ++i) {
+            if (arr[i] == arr[i - 1]) count++;
+            else {
+                v.push_back(count);
+                count = 1;
+            }
+        }
+        v.push_back(count);
+        sort(v.begin(), v.end());
+        for (int i = 0; i < v.size() - 1; ++i) {
+            if (v[i] == v[i + 1]) return false;
+        }
+        return true;
+    }
+};
