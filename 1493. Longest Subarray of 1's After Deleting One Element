@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int longestSubarray(vector<int>& nums) {
+        int n = nums.size() ;
+        int z = 0 ;
+        int i = 0, j = 0 ;
+        int maxLen = 0 ;
+        while(j < n) {
+            if(nums[j] == 0) z++ ;
+            while(z > 1) {
+                if(nums[i] == 0) z-- ;
+                i++ ;
+            }
+            maxLen = max(maxLen, j-i) ;
+            j++ ;
+        }
+        maxLen = max(maxLen, j-i-1) ;
+        return maxLen ;
+    }
+};
