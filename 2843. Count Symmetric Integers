@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int countSymmetricIntegers(int l, int h) {
+        if(h < 10) return 0 ;
+        if(l >= 100 && l <= 999 && h >= 100 && h <= 999) return 0 ;
+        if(l >= 10000 && l <= 99999 && h >= 10000 && h <= 99999) return 0 ;
+        int cnt = 0 ;
+        for(int i = l; i <= h; i++) {
+            string s = to_string(i) ;
+            while(i <= h && s.length() % 2 != 0) {
+                i++ ;
+                s = to_string(i) ;
+            }
+            if(i > h) break ;
+            int n = s.length() ;
+            int s1 = 0, s2 = 0 ;
+            for(int j = 0; j < n/2; j++) {
+                s1 += (s[j] - '0') ;
+                s2 += (s[n-1-j] - '0') ;
+            }
+            if(s1 == s2) cnt++ ;
+        }
+        return cnt ;
+    }
+};
