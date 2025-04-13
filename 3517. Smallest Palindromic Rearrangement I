@@ -1,0 +1,19 @@
+class Solution {
+public:
+    string smallestPalindrome(string s) {
+        int n = s.length() ;
+        map<char, int> mp ;
+        for(char c : s) mp[c]++ ;
+        string s1 = "" ;
+        char c = '#' ;
+        for(auto& pair : mp){
+            int m = pair.second ;
+            s1 += string(m/2, pair.first) ;
+            if(m % 2 != 0) c = pair.first ;
+        }
+        string s2(s1.rbegin(), s1.rend()) ;
+        if(c != '#') s1 += c ;
+        s1 += s2 ;
+        return s1 ;
+    }
+};
