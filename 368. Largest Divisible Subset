@@ -12,7 +12,7 @@ public:
                     prev[i] = j ;
                 }
             }
-            if(v[i] > v[maxIdx]) maxIdx = i ;
+            if(v[maxIdx] < v[i]) maxIdx = i ;
         }
         vector<int> ans ;
         while(maxIdx != -1) {
