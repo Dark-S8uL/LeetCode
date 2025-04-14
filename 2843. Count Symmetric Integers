@@ -2,8 +2,8 @@ class Solution {
 public:
     int countSymmetricIntegers(int l, int h) {
         if(h < 10) return 0 ;
-        if(l >= 100 && l <= 999 && h >= 100 && h <= 999) return 0 ;
-        if(l >= 10000 && l <= 99999 && h >= 10000 && h <= 99999) return 0 ;
+        else if(l >= 100 && l <= 999 && h >= 100 && h <= 999) return 0 ;
+        else if(l >= 10000 && l <= 99999 && h >= 10000 && h <= 99999) return 0 ;
         int cnt = 0 ;
         for(int i = l; i <= h; i++) {
             string s = to_string(i) ;
