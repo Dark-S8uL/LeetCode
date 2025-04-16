@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int maxRectangleArea(vector<vector<int>>& pt) {
+        int n = pt.size() ;
+        sort(pt.begin(), pt.end()) ;
+        set<pair<int, int>> st ;
+        for(auto& p : pt) {
+            st.insert({p[0], p[1]}) ;
+        }
+        int area = -1 ;
+        for(int i = 0; i < n-1; i++) {
+            int x1 = pt[i][0], y1 = pt[i][1] ;
+            for(int j = i+1; j < n; j++) {
+                int x2 = pt[j][0], y2 = pt[j][1] ;
+                if(x1 == x2 && y1 == y2) continue ;
+                if(st.find({x1, y2}) != st.end() && st.find({x2, y1}) != st.end()) {
+                    bool f = true ;
+                    for(int k = 0; k < n; k++) {
+                        int c = pt[k][0], d = pt[k][1] ;
+                        if((c == x1 && d == y1) || (c == x2 && d == y2) || (c == x1 && d == y2) || (c == x2 && d == y1)) continue ;
+                        if(c >= min(x1, x2) && c <= max(x1, x2) && d >= min(y1, y2) && d <= max(y1, y2)) {
+                            f = false ;
+                            break ;
+                        }
+                    }
+                    if(f) {
+                        int a = abs(y2 - y1) * abs(x2 - x1) ;
+                        if(a > 0) area = max(area, a) ;
+                    }
+                }
+            }
+        }
+        return area ;
+    }
+};
