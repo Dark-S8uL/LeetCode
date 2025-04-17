@@ -1,0 +1,37 @@
+# Approach 01 :
+
+class Solution {
+public:
+    int p[1001][1001] ;
+    int solve(int i, int j, int m, int n, string& s, string& t) {
+        if(j >= n) return 1 ;
+        if(i >= m) return 0 ;
+        if(p[i][j] != -1) return p[i][j] ;
+        if(s[i] == t[j]) return p[i][j] = solve(i+1, j+1, m, n, s, t) + solve(i+1, j, m, n, s, t) ;
+        return p[i][j] = solve(i+1, j, m, n, s, t) ;
+    }
+    int numDistinct(string s, string t) {
+        int m = s.length(), n = t.length() ;
+        memset(p, -1, sizeof(p)) ;
+        return solve(0, 0, m, n, s, t) ;
+    }
+};
+
+--------------------------------------------------------------------------------------------------------
+# Approach 02 :
+
+class Solution {
+public:
+    int numDistinct(string s, string t) {
+        int m = s.length(), n = t.length() ;
+        vector<vector<unsigned int>> p(m+1, vector<unsigned int>(n+1, 0)) ;
+        for(int i = 0; i <= m; i++) p[i][0] = 1 ;
+        for(int i = 1; i <= m; i++) {
+            for(int j = 1; j <= n; j++) {
+                if(s[i-1] == t[j-1]) p[i][j] = p[i-1][j-1] + p[i-1][j] ;
+                else p[i][j] = p[i-1][j] ;
+            }
+        }
+        return p[m][n] ;
+    }
+};
