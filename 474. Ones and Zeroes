@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int t[601][101][101] ;
+    int solve(int i, int sz, vector<string>& s, int m, int n) {
+        if(i >= sz || m < 0 || n < 0) return 0 ;
+        if(m == 0 && n == 0) return 0 ;
+        if(t[i][m][n] != -1) return t[i][m][n] ;
+        int z = count(s[i].begin(), s[i].end(), '0') ;
+        int o = s[i].size() - z ;
+        if(z <= m && o <= n) {
+            int a = 1 + solve(i+1, sz, s, m-z, n-o) ;
+            int b = solve(i+1, sz, s, m, n) ;
+            return t[i][m][n] = max(a, b) ;
+        } else return t[i][m][n] = solve(i+1, sz, s, m, n) ;
+    }
+    int findMaxForm(vector<string>& s, int m, int n) {
+        int sz = s.size() ;
+        memset(t, -1, sizeof(t)) ;
+        int ans = solve(0, sz, s, m, n) ;
+        return ans ;
+    }
+};
