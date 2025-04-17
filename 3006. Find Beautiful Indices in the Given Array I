@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<int> beautifulIndices(string s, string a, string b, int k) {
+        int n = s.length(), na = a.length(), nb = b.length() ;
+        vector<int> idx, jdx ;
+        for(int i = 0; i <= n-na; i++) {
+            if(s.substr(i, na) == a) idx.push_back(i) ;
+        }
+        for(int j = 0; j <= n-nb; j++) {
+            if (s.substr(j, nb) == b) jdx.push_back(j) ;
+        }
+        vector<int> v ;
+        int j = 0 ;
+        for (int i = 0; i < idx.size(); ++i) {
+            while (j < jdx.size() && jdx[j] < idx[i] - k) j++ ;
+            int p = j ;
+            while (p < jdx.size() && jdx[p] <= idx[i] + k) {
+                v.push_back(idx[i]) ;
+                break ;
+            }
+        }
+        return v ;
+    }
+};
