@@ -1,0 +1,14 @@
+class Solution {
+public:
+    vector<int> mostCompetitive(vector<int>& nums, int k) {
+        int n = nums.size() ;
+        if(n == 1) return nums ;
+        if(k == 1) return {*min_element(nums.begin(), nums.end())} ;
+        vector<int> v ;
+        for(int i = 0; i < n; i++) {
+            while(!v.empty() && nums[i] < v.back() && (v.size()-1+n-i) >= k) v.pop_back() ;
+            if(v.size() < k) v.push_back(nums[i]) ;
+        }
+        return v ;
+    }
+};
