@@ -1,0 +1,28 @@
+class Solution {
+public:
+    string smallestSubsequence(string s) {
+        int n = s.length() ;
+        if(n == 1) return s ;
+        unordered_map<char, int> mp ;
+        for (char c : s) mp[c]++ ;
+        stack<char> stk ;
+        vector<bool> vis(26, false) ;
+        for(char c : s) {
+            mp[c]-- ;
+            if(vis[c-'a']) continue ;
+            while(!stk.empty() && c < stk.top() && mp[stk.top()] > 0) {
+                vis[stk.top()-'a'] = false ;
+                stk.pop() ;
+            }
+            stk.push(c) ;
+            vis[c-'a'] = true ;
+        }
+        string str = "" ;
+        while(!stk.empty()) {
+            str += stk.top() ;
+            stk.pop() ;
+        }
+        reverse(str.begin(), str.end()) ;
+        return str ;
+    }
+};
