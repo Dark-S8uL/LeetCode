@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int maximumPossibleSize(vector<int>& nums) {
+        int n = nums.size() ;
+        int l = 1 ;
+        if(n == 1) return l ;
+        int p = nums[0] ;
+        for(int i = 1; i < n; i++) {
+            if(p <= nums[i]) {
+                l++ ;
+                p = nums[i] ;
+            }
+        }
+        return l ;
+    }
+};
