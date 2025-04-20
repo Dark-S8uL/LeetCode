@@ -1,0 +1,20 @@
+class Solution {
+public:
+    long long calculateScore(vector<string>& inst, vector<int>& val) {
+        long long n = val.size() ;
+        if(n == 1) {
+            if(inst[0] == "add") return val[0] ;
+            else return 0 ;
+        }
+        if(inst[0] == "jump" && val[0] == 0) return 0 ;
+        long long i = 0, score = 0 ;
+        vector<bool> v(n, false) ;
+        while(i >= 0 && i < n) {
+            if(v[i]) break ;
+            v[i] = true ;
+            if(inst[i] == "add") score += val[i++] ; 
+            else i += val[i] ;
+        }
+        return score ;
+    }
+};
