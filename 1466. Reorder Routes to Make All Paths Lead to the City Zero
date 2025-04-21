@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int cnt = 0 ;
+    void dfs(int s, vector<bool>& vis, vector<vector<int>>& adj, vector<vector<int>>& adj1) {
+        vis[s] = true ;
+        for(int x : adj[s]) {
+            if(!vis[x]) {
+                if(find(adj1[s].begin(), adj1[s].end(), x) != adj1[s].end()) cnt++ ;
+                dfs(x, vis, adj, adj1) ;
+            }
+        }
+    }
+    int minReorder(int n, vector<vector<int>>& conn) {
+        vector<vector<int>> adj(n), adj1(n) ;
+        for(auto& con : conn) {
+            int u = con[0], v = con[1] ;
+            adj[u].push_back(v) ;
+            adj[v].push_back(u) ;
+            adj1[u].push_back(v) ;
+        }
+        vector<bool> vis(n, false) ;
+        dfs(0, vis, adj, adj1) ;
+        return cnt ;
+    }
+};
