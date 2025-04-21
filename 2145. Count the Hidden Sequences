@@ -1,0 +1,14 @@
+class Solution {
+public:
+    int numberOfArrays(vector<int>& diff, int l, int u) {
+        int n = diff.size() ;
+        long long maxi = 0, mini = 0 ;
+        vector<long long> v(n+1, 0LL) ;
+        for(int i = 0; i < n; i++) {
+            v[i+1] += v[i] + diff[i] ;
+            maxi = max(maxi, v[i+1]) ;
+            mini = min(mini, v[i+1]) ;
+        }
+        return max(0LL, (u - maxi) - (l - mini) + 1) ;
+    }
+};
