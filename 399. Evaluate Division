@@ -1,0 +1,33 @@
+class Solution {
+public:
+    double dfs(string& s, string& t, map<string, vector<pair<string, double>>>& mp, set<string>& vis) {
+        if(mp.find(s) == mp.end() || mp.find(t) == mp.end()) return -1.0 ;
+        if(s == t) return 1.0 ;
+        vis.insert(s) ;
+        for(auto& pair : mp[s]) {
+            string x = pair.first ;
+            double w = pair.second ;
+            if(!vis.count(x)) {
+                double d = dfs(x, t, mp, vis) ;
+                if(d != -1.0) return d * w ;
+            }
+        }
+        return -1.0 ;
+    }
+    vector<double> calcEquation(vector<vector<string>>& eq, vector<double>& val, vector<vector<string>>& queries) {
+        int n = eq.size(), m = queries.size() ;
+        map<string, vector<pair<string, double>>> mp ;
+        for(int i = 0; i < n; i++) {
+            string a = eq[i][0], b = eq[i][1] ;
+            mp[a].push_back({b, val[i]}) ;
+            mp[b].push_back({a, 1.0 / val[i]}) ;
+        }
+        vector<double> v ;
+        for(auto& q : queries) {
+            set<string> vis ;
+            double d = dfs(q[0], q[1], mp, vis) ;
+            v.push_back(d) ;
+        }
+        return v ;
+    }
+};
