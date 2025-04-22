@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int mod = 1e9 + 7 ;
+    int t[100001] ;
+    int solve(int i, int n, string& p) {
+        if(i >= n) return 1 ;
+        if(t[i] != -1) return t[i] ;
+        int ans = 0 ;
+        if(i+1 < n && p[i] == p[i+1]) {
+            ans += solve(i+2, n, p) ;
+            ans %= mod ;
+            if(i+2 < n && p[i] == p[i+2]) {
+                ans += solve(i+3, n, p) ;
+                ans %= mod ;
+                if(i+3 < n && p[i] == p[i+3] && (p[i] == '7' || p[i] == '9')) {
+                    ans += solve(i+4, n, p) ;
+                    ans %= mod ;
+                }
+            }
+        }
+        ans += solve(i+1, n, p) ;
+        ans %= mod ;
+        return t[i] = ans ;
+    }
+    int countTexts(string p) {
+        int n = p.length() ;
+        memset(t, -1, sizeof(t)) ;
+        return solve(0, n, p)  ;
+    }
+};
