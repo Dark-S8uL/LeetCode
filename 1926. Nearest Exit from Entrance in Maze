@@ -1,0 +1,56 @@
+# Approach 01 : DFS
+
+class Solution {
+public:
+    int t[101][101][5] ;
+    bool vis[101][101] ;
+    int solve(int i, int j, int m, int n, int x, int y, vector<vector<char>>& maze, int dir) {
+        if(i < 0 || i >= m || j < 0 || j >= n || maze[i][j] == '+' || vis[i][j]) return 1e5 ;
+        if((i == 0 || i == m-1 || j == 0 || j == n-1) && !(i == x && j == y)) return 0 ;
+        if(dir != -1 && t[i][j][dir] != -1) return t[i][j][dir] ;
+        vis[i][j] = true ;
+        int u = solve(i-1, j, m, n, x, y, maze, 0) ;
+        int d = solve(i+1, j, m, n, x, y, maze, 1) ;
+        int l = solve(i, j-1, m, n, x, y, maze, 2) ;
+        int r = solve(i, j+1, m, n, x, y, maze, 3) ;
+        vis[i][j] = false ;
+        int mini = min({u, d, l, r}) ;
+        if(dir != -1) t[i][j][dir] = 1 + mini ;
+        return 1 + mini ;
+    }
+    int nearestExit(vector<vector<char>>& maze, vector<int>& ent) {
+        int m = maze.size(), n = maze[0].size() ;
+        memset(t, -1, sizeof(t)) ;
+        memset(vis, false, sizeof(vis)) ;
+        int ans = solve(ent[0], ent[1], m, n, ent[0], ent[1], maze, -1) ;
+        return (ans > 1e4 ? -1 : ans) ;
+    }
+};
+
+------------------------------------------------------------------------------------------------------------
+
+# Approach 02 : BFS
+
+class Solution {
+public:
+    int nearestExit(vector<vector<char>>& maze, vector<int>& ent) {
+        int m = maze.size(), n = maze[0].size() ;
+        vector<pair<int, int>> dir = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}} ;
+        queue<vector<int>> q ;
+        q.push({ent[0], ent[1], 0}) ;
+        while(!q.empty()) {
+            auto v = q.front() ;
+            q.pop() ;
+            int i = v[0], j = v[1], st = v[2] ;
+            if((i == 0 || i == m-1 ||j == 0 || j == n-1) && !(i == ent[0] && j == ent[1])) return st ;
+            for(auto& d : dir) {
+                int x = i + d.first, y = j + d.second ;
+                if(x >= 0 && x < m && y >= 0 && y < n && maze[x][y] == '.') {
+                    maze[x][y] = '+' ;
+                    q.push({x, y, st+1}) ;
+                }
+            }
+        }
+        return -1 ;
+    }
+};
