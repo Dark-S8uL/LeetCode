@@ -1,0 +1,63 @@
+# Approach 01 :
+
+class Solution {
+public:
+    vector<string> letterCombinations(string d) {
+        int n = d.length() ;
+        if(n == 0) return {} ;
+        unordered_map<int, vector<string>> mp ;
+        for (int i = 0; i < 15; i++) mp[(i/3) + 2].push_back(string(1, 'a' + i)) ;
+        for (int i = 15; i < 19; i++) mp[7].push_back(string(1, 'a' + i)) ;
+        for (int i = 19; i < 22; i++) mp[8].push_back(string(1, 'a' + i)) ;
+        for (int i = 22; i < 26; i++) mp[9].push_back(string(1, 'a' + i)) ;
+        if(n == 1) return mp[(d[0] - '0')] ;
+        vector<string> v ;
+        if(n == 2) {
+            for(auto& s : mp[(d[0] - '0')]) {
+                string p = s ;
+                for(auto& t : mp[(d[1] - '0')]) {
+                    p += t ;
+                    v.push_back(p) ;
+                    p.pop_back() ;
+                }
+            }
+        } else if(n == 3) {
+            for(auto& s : mp[(d[0] - '0')]) {
+                string p = s ;
+                for(auto& t : mp[(d[1] - '0')]) {
+                    p += t ;
+                    for(auto& r : mp[(d[2] - '0')]) {
+                        p += r ;
+                        v.push_back(p) ;
+                        p.pop_back() ;
+                    }
+                    p.pop_back() ;
+                }
+            }
+        } else if(n == 4) {
+            for(auto& s : mp[(d[0] - '0')]) {
+                string p = s ;
+                for(auto& t : mp[(d[1] - '0')]) {
+                    p += t ;
+                    for(auto& r : mp[(d[2] - '0')]) {
+                        p += r ;
+                        for(auto& u : mp[(d[3] - '0')]) {
+                            p += u ;
+                            v.push_back(p) ;
+                            p.pop_back() ;
+                        }
+                        p.pop_back() ;
+                    }
+                    p.pop_back() ;
+                }
+            }
+        }
+        return v ;
+    }
+};
+
+
+------------------------------------------------------------------------------------
+
+# Approach 02 :
+
