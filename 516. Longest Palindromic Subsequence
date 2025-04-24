@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int t[1001][1001] ;
+    int solve(int i, int j, string& s) {
+        if(i == j) return 1 ;
+        if(i > j) return 0 ;
+        if(t[i][j] != -1) return t[i][j] ;
+        int a = 0, b = 0 ;
+        if(s[i] == s[j]) a = 2 + solve(i+1, j-1, s) ;
+        else b = max(solve(i+1, j, s), solve(i, j-1, s)) ;
+        return t[i][j] = max({a, b}) ;
+    }
+    int longestPalindromeSubseq(string s) {
+        int n = s.length() ;
+        memset(t, -1, sizeof(t)) ;
+        int ans = solve(0, n-1, s) ;
+        return ans ;
+    }
+};
