@@ -1,0 +1,18 @@
+class Solution {
+public:
+    long long countInterestingSubarrays(vector<int>& nums, int mod, int k) {
+        int n = nums.size() ;
+        vector<long long> pSum(n+1, 0) ;
+        pSum[0] = 0 ;
+        for(int i = 1; i <= n; i++) {
+            pSum[i] = pSum[i-1] + (nums[i-1] % mod == k ? 1 : 0) ;
+        }
+        unordered_map<long long, long long> mp ;
+        long long ans = 0 ;
+        for(int i = 0; i <= n; i++) {
+            ans += mp[(pSum[i] + mod - k) % mod] ;
+            mp[(pSum[i] % mod)]++ ;
+        }
+        return ans ;
+    }
+};
