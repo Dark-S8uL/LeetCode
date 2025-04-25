@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int minCostConnectPoints(vector<vector<int>>& p) {
+        int n = p.size() ;
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> pq ;
+        pq.push({0, 0}) ;
+        vector<bool> vis(n, false) ;
+        int mini = 0 ;
+        int cnt = 0 ;
+        while(cnt < n) {
+            auto [c, u] = pq.top() ;
+            pq.pop() ;
+            if(vis[u]) continue ;
+            vis[u] = true ;
+            mini += c ;
+            cnt++ ;
+            for(int v = 0; v < n; v++) {
+                if(!vis[v]) {
+                    int dist = abs(p[v][0] - p[u][0]) + abs(p[v][1] - p[u][1]) ;
+                    pq.push({dist, v}) ;
+                }
+            }
+        }
+        return mini ;
+    }
+};
