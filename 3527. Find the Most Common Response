@@ -1,0 +1,29 @@
+class Solution {
+public:
+    string findCommonResponse(vector<vector<string>>& res) {
+        int n = res.size() ;
+        vector<set<string>> st ;
+        for(int i = 0; i < n; i++) {
+            set<string> s(res[i].begin(), res[i].end()) ;
+            st.push_back(s) ;
+        }
+        map<string, int> mp ;
+        for(int i = 0; i < n; i++) {
+            for(auto& it : st[i]) {
+                mp[it]++ ;
+            }
+        }
+        vector<string> v ;
+        int m = 0 ;
+        for(auto& pair : mp) {
+            m = max(m, pair.second) ;
+        }
+        for(auto& pair : mp) {
+            if(pair.second == m) {
+                v.push_back(pair.first) ;
+            }
+        }
+        sort(v.begin(), v.end()) ;
+        return v[0] ;
+    }
+};
