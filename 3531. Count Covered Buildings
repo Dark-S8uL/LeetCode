@@ -1,0 +1,24 @@
+class Solution {
+public:
+    bool check(int x, int y, vector<int>& l, vector<int>& r, vector<int>& u, vector<int>& d) {
+        if(u[y] < x && d[y] > x && l[x] < y && r[x] > y) return 1 ;
+        return 0 ;
+    }
+    int countCoveredBuildings(int n, vector<vector<int>>& b) {
+        int m = b.size() ;
+        vector<int> l(n+1, n+1), r(n+1, -1), u(n+1, n+1), d(n+1, -1);
+        for(int i = 0; i < m; i++) {
+            int x = b[i][0], y = b[i][1];
+            l[x] = min(l[x], y);
+            r[x] = max(r[x], y);
+            u[y] = min(u[y], x);
+            d[y] = max(d[y], x);
+        }
+        int cnt = 0 ;
+        for(int i = 0; i < m; i++) {
+            int x = b[i][0], y = b[i][1];
+            if(check(x, y, l, r, u, d)) cnt++ ;
+        }
+        return cnt ;
+    }
+};
