@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int mod = 1e9 + 7 ;
+    void dfs(int s, vector<vector<pair<int, int>>>& adj, vector<bool>& vis, vector<int>& v) {
+        vis[s] = true ;
+        for(auto& a : adj[s]) {
+            int x = a.first, w = a.second ;
+            if(!vis[x]) {
+                v[x] = (((1LL * v[s]) % mod) * (w % mod)) % mod ;
+                dfs(x, adj, vis, v) ;
+            }
+        }
+    }
+    vector<int> baseUnitConversions(vector<vector<int>>& con) {
+        int n = con.size() ;
+        n += 1 ; 
+        vector<vector<pair<int, int>>> adj(n) ;
+        for(auto& c : con) {
+            int u = c[0], v = c[1], w = c[2] ;
+            adj[u].push_back({v, w}) ;
+        }
+        vector<int> v(n, 1) ;
+        vector<bool> vis(n ,false) ;
+        dfs(0, adj, vis, v) ;
+        return v ;
+    }
+};
