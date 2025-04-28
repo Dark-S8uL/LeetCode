@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<bool> pathExistenceQueries(int n, vector<int>& nums, int maxDiff, vector<vector<int>>& q) {
+        int m = q.size() ;
+        unordered_map<int, int> mp ;
+        int c = 1 ;
+        for(int i = 1; i < n; i++) {
+            int d = abs(nums[i-1] - nums[i]) ;
+            if(d <= maxDiff) mp[i-1] = mp[i] = c ;
+            else {
+                c++ ;
+                mp[i] = c ;
+            }
+        }
+        vector<bool> ans(m, false) ;
+        for(int i = 0; i < m; i++) {
+            int u = q[i][0], v = q[i][1] ;
+            if(mp[u] == mp[v]) ans[i] = true ;
+        }
+        return ans ;
+    }
+};
