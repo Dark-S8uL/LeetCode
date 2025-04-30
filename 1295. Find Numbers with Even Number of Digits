@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int findNumbers(vector<int>& nums) {
+        int n = nums.size() ;
+        int cnt = 0 ;
+        for(int num : nums){
+            int d = 0 ;
+            while(num){
+                d++ ;
+                num /= 10 ;
+            }
+            if(d % 2 == 0) cnt++ ;
+        }
+        return cnt ;
+    }
+};
