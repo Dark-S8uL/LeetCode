@@ -1,0 +1,36 @@
+class Solution {
+public:
+    bool check(int k, const vector<int>& tasks, const vector<int>& workers, int pills, int stn) {
+        multiset<int> st(tasks.begin(), tasks.begin() + k);
+        int p = pills ;
+        int n = workers.size() ;
+        for(int i = n-k; i < n; i++) {
+            auto it = st.begin() ;
+            if(*it <= workers[i]) st.erase(it) ;
+            else {
+                if(p == 0) return false;
+                auto it2 = st.upper_bound(workers[i] + stn) ;
+                if(it2 == st.begin()) return false ;
+                it2-- ;
+                st.erase(it2) ; 
+                p-- ;
+            }
+        }
+        return true;
+    }
+    int maxTaskAssign(vector<int>& tasks, vector<int>& work, int p, int stn) {
+        int m = tasks.size(), n = work.size() ;
+        sort(tasks.begin(), tasks.end()) ;
+        sort(work.begin(), work.end()) ;
+        int ans = 0 ;
+        int i = 0, j = min(m, n) ;
+        while(i <= j) {
+            int mid = i + (j - i) / 2 ;
+            if(check(mid, tasks, work, p, stn)) {
+                ans = mid ;
+                i = mid+1 ;
+            } else j = mid-1 ;
+        }     
+        return ans ;
+    }
+};
