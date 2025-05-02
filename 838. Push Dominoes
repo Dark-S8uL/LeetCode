@@ -1,0 +1,32 @@
+class Solution {
+public:
+    string pushDominoes(string d) {
+        int n = d.length() ;
+        if(n == 1) return d ;
+        int i = 0, j = 0 ;
+        while(i < n && d[i] == '.') i++ ;
+        if(i < n && d[i] == 'L') {
+            for(int k = i; k >= 0; k--) d[k] = 'L' ;
+        }
+        j = i+1 ;
+        while(j < n && d[j] == '.') j++ ;
+        while(j < n) {
+            if(d[i] == 'R' && d[j] == 'L') {
+                int m = (j-i-1) / 2 ;
+                int p = i+1, q = j-1 ;
+                for(int k = 0; k < m; k++) d[p++] = 'R' ;
+                for(int k = 0; k < m; k++) d[q--] = 'L' ;
+            } else if(d[i] == 'R' && d[j] == 'R') for(int k = i+1; k <= j-1; k++) d[k] = 'R' ;
+            else if(d[i] == 'L' && d[j] == 'L') for(int k = i+1; k <= j-1; k++) d[k] = 'L' ;
+            i = j ;
+            j++ ;
+            while(j < n && d[j] == '.') j++ ;
+        }
+        j = n-1 ;
+        while(j >= 0 && d[j] == '.') j-- ;
+        if(j >= 0 && d[j] == 'R') {
+            for(int k = j+1; k < n; k++) d[k] = 'R' ;
+        }
+        return d ;
+    }
+};
