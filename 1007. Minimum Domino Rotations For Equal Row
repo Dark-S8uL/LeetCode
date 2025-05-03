@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int minDominoRotations(vector<int>& t, vector<int>& b) {
+        int n = t.size() ;
+        unordered_map<int, int> mp ;
+        for(int i = 0; i < n; i++) {
+            if(t[i] == b[i]) mp[t[i]]++ ;
+            else {
+                mp[t[i]]++ ;
+                mp[b[i]]++ ;
+            }
+        }
+        int maxi = 0 ;
+        bool f = false ;
+        for(auto& pair : mp) {
+            if(pair.second >= n) {
+                maxi = pair.first ;
+                f = true ;
+            }
+        }
+        if(!f) return -1 ;
+        int a = count(t.begin(), t.end(), maxi) ;
+        int c = count(b.begin(), b.end(), maxi) ;
+        if(a >= c) return mp[maxi] - a ;
+        return mp[maxi] - c ;
+    }
+};
