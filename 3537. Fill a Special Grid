@@ -1,0 +1,47 @@
+# Approach 01 :
+
+class Solution {
+public:
+    vector<vector<int>> specialGrid(int n) {
+        if(n == 0) return {{0}} ;
+        vector<vector<int>> a = specialGrid(n-1);
+        int l = a.size() ;
+        int sz = 2*l, offset = l*l ;
+        vector<vector<int>> v(sz, vector<int>(sz)) ;
+        for (int i = 0; i < l; i++) {
+            for (int j = 0; j < l; j++) {
+                int p = a[i][j] ;
+                v[i][j+l] = p ;
+                v[i+l][j + l] = p + offset ;
+                v[i+l][j] = p + 2*offset ;
+                v[i][j] = p + 3*offset ;
+            }
+        }
+        return v ;
+    }
+};
+
+-----------------------------------------------------------------
+# Approach 02 :
+
+class Solution {
+public:
+    int cnt = 0 ;
+    void solve(int i, int j, int n, vector<vector<int>>& v) {
+        if(n == 0) {
+            v[i][j] = cnt ;
+            cnt++ ;
+            return ;
+        }
+        solve(i-n, j, n/2, v) ;
+        solve(i, j, n/2, v) ;
+        solve(i, j-n, n/2, v) ;
+        solve(i-n, j-n, n/2, v) ;
+    }
+    vector<vector<int>> specialGrid(int n) {
+        int m = pow(2, n) ;
+        vector<vector<int>> v(m, vector<int>(m)) ;
+        solve(m-1, m-1, m/2, v) ;
+        return v ;
+    }
+};
