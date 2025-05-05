@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int mod = 1e9 + 7 ;
+    int numTilings(int n) {
+        if(n <= 2) return n ;
+        int prev3 = 1, prev2 = 1, prev = 2 ;
+        for(int i = 3; i <= n; i++) {
+            int curr = ((2 * prev) % mod + prev3) % mod ;
+            prev3 = prev2 % mod ;
+            prev2 = prev % mod ;
+            prev = curr % mod ;
+        }
+        return prev % mod ;
+    }
+};
