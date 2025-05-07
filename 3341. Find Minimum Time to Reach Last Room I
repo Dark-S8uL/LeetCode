@@ -1,0 +1,61 @@
+# Approach 01 :
+
+class Solution {
+public:
+    int minTimeToReach(vector<vector<int>>& move) {
+        int n = move.size(), m = move[0].size() ;
+        vector<vector<int>> time(n, vector<int>(m, INT_MAX)) ;
+        priority_queue<tuple<int, int, int>, vector<tuple<int, int, int>>, greater<>> pq ;
+        pq.emplace(0, 0, 0) ;
+        time[0][0] = 0 ;
+        vector<int> dr = {-1, 1, 0, 0}, dc = {0, 0, -1, 1} ;
+        while(!pq.empty()) {
+            auto [t, i, j] = pq.top() ;
+            pq.pop() ;
+            if(i == n-1 && j == m-1) return t ;
+            for(int d = 0; d < 4; d++) {
+                int x = i + dr[d], y = j + dc[d] ;
+                if(x >= 0 && x < n && y >= 0 && y < m) {
+                    int p = max(t+1, move[x][y]+1) ;
+                    if(p < time[x][y]) {
+                        time[x][y] = p ;
+                        pq.emplace(p, x, y) ;
+                    }
+                }
+            }
+        }
+        return -1 ;
+    }
+};
+
+-----------------------------------------------------------------------------------------------------
+
+# Approach 02 :
+
+class Solution {
+public:
+    vector<vector<int>> dir = {{-1,0}, {1,0}, {0,-1}, {0,1}} ;
+    int mini = INT_MAX ;
+    void dfs(int i, int j, int n, int m, vector<vector<int>>& move, int t, vector<vector<int>>& time) {
+        if(i < 0 || i >= n || j < 0 || j >= m || t >= time[i][j]) return ;
+        time[i][j] = t ;
+        if(i == n-1 && j == m-1) {
+            mini = min(mini, t) ;
+            return ;
+        }
+        for(auto& d : dir) {
+            int x = i + d[0], y = j + d[1] ;
+            if(x >= 0 && x < n && y >= 0 && y < m) {
+                int p = max(t + 1, move[x][y]+1) ;
+                dfs(x, y, n, m, move, p, time) ;
+            }
+        }
+    }
+
+    int minTimeToReach(vector<vector<int>>& move) {
+        int n = move.size(), m = move[0].size() ;
+        vector<vector<int>> time(n, vector<int>(m, INT_MAX)) ;
+        dfs(0, 0, n, m, move, 0, time) ;
+        return mini ;
+    }
+};
