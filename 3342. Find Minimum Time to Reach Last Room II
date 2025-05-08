@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int minTimeToReach(vector<vector<int>>& move) {
+        int n = move.size(), m = move[0].size() ;
+        vector<vector<vector<int>>> time(n, vector<vector<int>>(m, vector<int>(2, INT_MAX))) ;
+        priority_queue<tuple<int, int, int, int>, vector<tuple<int, int, int, int>>, greater<>> pq ;
+        pq.emplace(0, 0, 0, 0) ;
+        time[0][0][0] = 0 ;
+        vector<int> dr = {-1, 1, 0, 0}, dc = {0, 0, -1, 1} ;
+        while (!pq.empty()) {
+            auto [t, i, j, f] = pq.top() ;
+            pq.pop() ;
+            if (i == n-1 && j == m-1) return t ;
+            for (int d = 0; d < 4; d++) {
+                int x = i + dr[d], y = j + dc[d] ;
+                if (x >= 0 && x < n && y >= 0 && y < m) {
+                    int a = (f == 0 ? 1 : 2) ;
+                    int p = max(t+a, move[x][y]+a) ;
+                    int nf = 1 - f ;
+                    if (p < time[x][y][nf]) {
+                        time[x][y][nf] = p ;
+                        pq.emplace(p, x, y, nf) ;
+                    }
+                }
+            }
+        }
+        return -1 ;
+    }
+};
