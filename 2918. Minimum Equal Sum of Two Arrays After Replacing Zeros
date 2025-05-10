@@ -1,0 +1,13 @@
+class Solution {
+public:
+    long long minSum(vector<int>& nums1, vector<int>& nums2) {
+        long long s1 = accumulate(nums1.begin(), nums1.end(), 0LL) ;
+        long long s2 = accumulate(nums2.begin(), nums2.end(), 0LL) ;
+        int c1 = count(nums1.begin(), nums1.end(), 0) ;
+        int c2 = count(nums2.begin(), nums2.end(), 0) ;
+        if(c1 == 0 && c2 == 0) return s1 == s2 ? s1 : -1 ;
+        if(c1 == 0) return s2 + c2 <= s1 ? s1 : -1 ;
+        if(c2 == 0) return s1 + c1 <= s2 ? s2 : -1 ;
+        return max(s1 + c1, s2 + c2) ;
+    }
+};
