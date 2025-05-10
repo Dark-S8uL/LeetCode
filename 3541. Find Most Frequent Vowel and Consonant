@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int maxFreqSum(string s) {
+        int n = s.length() ;
+        unordered_map<char, int> mp1, mp2 ;
+        for(char c : s) {
+            if(c == 'a' || c == 'e' || c == 'i' || c =='o' || c == 'u') mp1[c]++ ;
+        }
+        for(char c : s) {
+            if(c != 'a' && c != 'e' && c != 'i' && c !='o' && c != 'u') mp2[c]++ ;
+        }
+        int maxi1 = 0, maxi2 = 0 ;
+        for(auto& p : mp1) {
+            maxi1 = max(maxi1, p.second) ;
+        }
+        for(auto& p : mp2) {
+            maxi2 = max(maxi2, p.second) ;
+        }
+        return maxi1 + maxi2 ;
+    }
+};
