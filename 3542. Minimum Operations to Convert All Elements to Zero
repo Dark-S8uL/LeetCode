@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int minOperations(vector<int>& nums) {
+        stack<int> st ;
+        int cnt = 0 ;
+        for(int num : nums) {
+            while(!st.empty() && num < st.top()) st.pop() ;
+            if(st.empty() || num > st.top()) {
+                if(num > 0) cnt++ ;
+                st.push(num) ;
+            }
+        }
+        return cnt ;
+    }
+};
