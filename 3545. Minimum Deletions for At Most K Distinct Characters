@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int minDeletion(string s, int k) {
+        int n = s.length() ;
+        int sz = set<char>(s.begin(), s.end()).size() ;
+        if(sz <= k) return 0 ;
+        vector<int> v(26, 0) ;
+        for(char c : s) {
+            v[c - 'a']++ ;
+        }
+        sort(v.rbegin(), v.rend()) ;
+        int cnt = 0 ;
+        for(int i = 0; i < 26 && k > 0; i++, k--) {
+            cnt += v[i] ;
+        }
+        return n-cnt ;
+    }
+};
