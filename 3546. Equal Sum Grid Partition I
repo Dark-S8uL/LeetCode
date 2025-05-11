@@ -1,0 +1,29 @@
+class Solution {
+public:
+    bool canPartitionGrid(vector<vector<int>>& grid) {
+        int m = grid.size(), n = grid[0].size() ;
+        vector<long long> pref1(m, 0LL), pref2(n, 0LL) ;
+        pref1[0] = accumulate(grid[0].begin(), grid[0].end(), 0LL) ;
+        for(int i = 1; i < m; i++) {
+            long long p = accumulate(grid[i].begin(), grid[i].end(), 0LL) ;
+            pref1[i] = pref1[i-1] + p ;
+        }
+        long long sum = pref1[m-1] ;
+        if(sum % 2) return false ;
+        for(int i = 0; i < m; i++) {
+            if(pref1[i] == (sum/2)) return true ;
+        }
+        for(int j = 0; j < n; j++) {
+            long long c = 0 ;
+            for(int i = 0; i < m; i++) {
+                c += grid[i][j] ;
+            }
+            if(j == 0) pref2[j] = c ;
+            else pref2[j] = pref2[j-1] + c ;
+        }
+        for(int j = 0; j < n; j++) {
+            if(pref2[j] == (sum/2)) return true ;
+        }
+        return false ;
+    }
+};
