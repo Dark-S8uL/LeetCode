@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<int> findEvenNumbers(vector<int>& d) {
+        int n = d.size() ;
+        set<int> st ;
+        vector<int> v ;
+        for(int i = 0; i < n; i++) {
+            if(d[i] == 0) continue ;
+            for(int j = 0; j < n; j++) {
+                if(i == j) continue ;
+                for(int k = 0; k < n; k++) {
+                    int val = d[i] * 100 + d[j] * 10 + d[k] ;
+                    if(val % 2 == 0 && j != k && i != k && !st.count(val)) {
+                        st.insert(val) ;
+                        v.push_back(val) ;
+                    }
+                }
+            }
+        }
+        sort(v.begin(), v.end()) ;
+        return v ;
+    }
+};
