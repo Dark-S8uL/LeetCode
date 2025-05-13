@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int dfs(int s, vector<int>& edges, vector<bool>& vis) {
+        int cnt = 0 ;
+        unordered_map<int, int> mp ;
+        int i = s, t = 0 ;
+        while(i != -1) {
+            if(mp.count(i)) return t - mp[i] ;
+            if(vis[i]) return -1 ; 
+            mp[i] = t++ ;
+            vis[i] = true ;
+            i = edges[i] ;
+        }
+        return -1 ;
+    }
+    int longestCycle(vector<int>& edges) {
+        int n = edges.size() ;
+        vector<bool> vis(n, false) ;
+        int len = 0 ;
+        for(int i = 0; i < n; i++) {
+            if(!vis[i] && edges[i] != -1) {
+                len = max(len, dfs(i, edges, vis)) ;
+            }
+        }
+        return len == 0 ? -1 : len ;
+    }
+};
