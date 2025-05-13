@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int mod = 1e9 + 7 ;
+    int lengthAfterTransformations(string s, int t) {
+        int n = s.length() ;
+        vector<int> v(26, 0) ;
+        for(char c : s) v[c-'a']++ ;
+        while(t--) {
+            v[0] += v[25] ;
+            v[0] %= mod ;
+            int z = v.back() ;
+            v.pop_back() ;
+            v.insert(v.begin(), z) ;
+        }
+        int len = 0 ;
+        for(int i = 0; i < 26; i++) {
+            len = (len + v[i]) % mod ;
+        }
+        return len ;
+    }
+};
