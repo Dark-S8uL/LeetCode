@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int t[100001][27] ;
+    int solve(int i, int prev, string& s, int k) {
+        if(i >= s.length()) return 0 ;
+        if(t[i][prev] != -1) return t[i][prev] ;
+        int c = s[i] - 'a' + 1 ;
+        int take = 0 ;
+        if(prev == 0 || abs(c - prev) <= k) take = 1 + solve(i+1, c, s, k) ;
+        int notTake = solve(i+1, prev, s, k) ;
+        return t[i][prev] = max(take, notTake) ;
+    }
+    int longestIdealString(string s, int k) {
+        int n = s.length() ;
+        memset(t, -1, sizeof(t)) ;
+        return solve(0, 0, s, k) ;
+    }
+};
