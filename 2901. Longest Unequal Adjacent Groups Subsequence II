@@ -1,0 +1,34 @@
+class Solution {
+public:
+    bool hamming(string& a, string& b) {
+        if(a.length() != b.length()) return false ;
+        int d = 0 ;
+        for (int i = 0; i < a.size(); i++) {
+            if (a[i] != b[i]) d++ ;
+            if (d > 1) return false ;
+        }
+        return d == 1 ;
+    }
+    vector<string> getWordsInLongestSubsequence(vector<string>& w, vector<int>& g) {
+        int n = w.size() ;
+        vector<int> dp(n, 1), prev(n, -1) ;
+        int maxi = 0 ;
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < i; j++) {
+                if((g[i] != g[j]) && hamming(w[i], w[j]) && (dp[i] < dp[j]+1)) {
+                    dp[i] = dp[j] + 1 ;
+                    prev[i] = j ;
+                }
+            }
+            maxi = max(maxi, dp[i]) ;
+        }
+        vector<string> res ;
+        int idx = max_element(dp.begin(), dp.end()) - dp.begin() ;
+        while (idx != -1) {
+            res.push_back(w[idx]) ;
+            idx = prev[idx] ;
+        }       
+        reverse(res.begin(), res.end()) ;
+        return res ;
+    }
+};
