@@ -1,0 +1,29 @@
+class Solution {
+public:
+    int minSwaps(vector<int>& nums) {
+        int n = nums.size() ;
+        vector<tuple<int, int, int>> sum ;
+        for(int i = 0; i < n; i++) {
+            int num = nums[i], s = 0 ;
+            while(num) {
+                s += num % 10 ;
+                num /= 10 ;
+            }
+            sum.push_back({s, nums[i], i}) ;
+        }
+        sort(sum.begin(), sum.end()) ;
+        vector<bool> vis(n, false) ;
+        int cnt = 0 ;
+        for(int i = 0; i < n; i++) {
+            if(vis[i] || get<2>(sum[i]) == i) continue ;
+            int j = i, sz = 0 ;
+            while(!vis[j]) {
+                vis[j] = true ;
+                j = get<2>(sum[j]) ;
+                sz++ ;
+            }
+            if(sz > 1) cnt += (sz - 1) ;
+        }
+        return cnt ;
+    }
+};
