@@ -1,3 +1,5 @@
+# Approach 01 :
+
 class Solution {
 public:
     int minSwaps(vector<int>& nums) {
@@ -23,6 +25,42 @@ public:
                 sz++ ;
             }
             if(sz > 1) cnt += (sz - 1) ;
+        }
+        return cnt ;
+    }
+};
+
+---------------------------------------------------------------------------------
+# Approach 02 : 
+
+class Solution {
+public:
+    int minSwaps(vector<int>& nums) {
+        int n = nums.size() ;
+        vector<pair<int, int>> sum ;
+        for(int i = 0; i < n; i++) {
+            int num = nums[i], s = 0 ;
+            while(num) {
+                s += num % 10 ;
+                num /= 10 ;
+            }
+            sum.push_back({s, nums[i]}) ;
+        }
+        sort(sum.begin(), sum.end(), [](pair<int, int>& a, pair<int, int>& b) {
+            if(a.first == b.first) return a.second < b.second ;
+            return a.first < b.first ;
+        }) ;
+        unordered_map<int, int> mp ;
+        for(int i = 0; i < n; i++) mp[nums[i]] = i ;
+        int cnt = 0 ;
+        for(int i = 0; i < n; i++) {
+            if(sum[i].second != nums[i]) {
+                int idx = mp[sum[i].second] ;
+                swap(nums[i], nums[idx]) ;
+                mp[nums[i]] = i ;
+                mp[nums[idx]] = idx ;
+                cnt++ ;
+            }
         }
         return cnt ;
     }
