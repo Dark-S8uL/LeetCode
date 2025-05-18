@@ -46,10 +46,7 @@ public:
             }
             sum.push_back({s, nums[i]}) ;
         }
-        sort(sum.begin(), sum.end(), [](pair<int, int>& a, pair<int, int>& b) {
-            if(a.first == b.first) return a.second < b.second ;
-            return a.first < b.first ;
-        }) ;
+        sort(sum.begin(), sum.end()) ;
         unordered_map<int, int> mp ;
         for(int i = 0; i < n; i++) mp[nums[i]] = i ;
         int cnt = 0 ;
