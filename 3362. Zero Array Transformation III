@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int maxRemoval(vector<int>& nums, vector<vector<int>>& q) {
+        int n = nums.size(), m = q.size() ;
+        priority_queue<int> pq ;
+        priority_queue<int, vector<int>, greater<>> prev ;
+        sort(q.begin(), q.end()) ;
+        int j = 0 ;
+        for(int i = 0; i < n; i++) {
+            while(j < m && q[j][0] == i) pq.push(q[j++][1]) ;
+            nums[i] -= prev.size() ;
+            while(nums[i] > 0 && !pq.empty() && pq.top() >= i) {
+                int e = pq.top() ; pq.pop() ;
+                prev.push(e) ;
+                nums[i]-- ;
+            }
+            if(nums[i] > 0) return -1 ;
+            while(!prev.empty() && prev.top() <= i) prev.pop() ;
+        }
+        return pq.size() ;
+    }
+};
