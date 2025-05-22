@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool isValid(int k, vector<int>& nums, vector<vector<int>>& q) {
+        int n = nums.size() ;
+        vector<int> diff(n+1, 0) ;
+        for(int i = 0; i < k; i++) {
+            int l = q[i][0], r = q[i][1], w = q[i][2] ;
+            diff[l] += w ;
+            diff[r+1] -= w ;
+        }
+        for(int i = 1; i <= n; i++) diff[i] += diff[i-1] ;
+        for(int i = 0; i < n; i++) {
+            if(diff[i] < nums[i]) return false ;
+        }
+        return true ;
+    }
+    int minZeroArray(vector<int>& nums, vector<vector<int>>& queries) {
+        int n = nums.size(), m = queries.size() ;
+        int i = 0, j = m ;
+        int ans = -1 ;
+        while(i <= j) {
+            int mid = i + (j-i) / 2 ;
+            if(isValid(mid, nums, queries)) {
+                ans = mid ;
+                j = mid-1 ;
+            } else i = mid+1 ;
+        }
+        return ans ;
+    }
+};
