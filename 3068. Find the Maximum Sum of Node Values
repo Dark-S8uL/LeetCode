@@ -1,0 +1,19 @@
+class Solution {
+public:
+    long long maximumValueSum(vector<int>& nums, int k, vector<vector<int>>& edges) {
+        int n = nums.size() ;
+        long long sum = accumulate(nums.begin(), nums.end(), 0LL) ;
+        long long diff = 0, minDiff = INT_MAX ;
+        int cnt = 0 ;
+        for(int num : nums) {
+            long long d = (num ^ k) - num ;
+            if(d > 0) {
+                diff += d ;
+                cnt++ ;
+            }
+            minDiff = min(minDiff, abs(d)) ;
+        }
+        if(cnt % 2 == 1) diff -= minDiff ;
+        return sum + diff ;
+    }
+};
