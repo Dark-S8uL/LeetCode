@@ -1,0 +1,19 @@
+class Solution {
+public:
+    long long minCuttingCost(int n, int m, int k) {
+        if(m <= k && n <= k) return 0 ;
+        priority_queue<int> pq ;
+        pq.push(n) ;
+        pq.push(m) ;
+        long long cost = 0 ;
+        while(!pq.empty()) {
+            long long a = pq.top() ; pq.pop() ;
+            if(a > k) {
+                long long c = a-k ;
+                cost += (c * k) ;
+                if(c > k) pq.push(c) ;
+            }
+        }
+        return cost ;
+    }
+};
