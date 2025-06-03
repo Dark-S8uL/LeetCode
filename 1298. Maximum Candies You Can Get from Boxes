@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int maxCandies(vector<int>& vis, vector<int>& candies, vector<vector<int>>& keys, vector<vector<int>>& containedBoxes, vector<int>& initialBoxes) {
+        bool f = true ;
+        int candy = 0 ;
+        while(!initialBoxes.empty() && f) {
+            f = false ;
+            vector<int> temp ;
+            for(int box : initialBoxes) {
+                if(vis[box]) {
+                    f = true ;
+                    temp.insert(end(temp), begin(containedBoxes[box]), end(containedBoxes[box])) ;
+                    for(int keyId : keys[box]) vis[keyId] = 1 ;
+                    candy += candies[box] ;
+                } else temp.push_back(box) ;
+            }
+            initialBoxes = temp ;
+        }
+        return candy ;
+    }
+};
