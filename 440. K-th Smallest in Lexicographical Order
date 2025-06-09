@@ -1,0 +1,27 @@
+class Solution {
+public: 
+    long cntSteps(long n, long curr, long next) {
+        long steps = 0 ;
+        while(curr <= n) {
+            steps += min(n + 1L, next) - curr ;
+            curr *= 10 ;
+            next *= 10 ;
+        }
+        return steps ;
+    }
+    int findKthNumber(int n, int k) {
+        long curr = 1 ;
+        k-- ;
+        while(k > 0) {
+            long gap = cntSteps(n, curr, curr+1) ;
+            if(gap <= k) {
+                k -= gap ;
+                curr++ ;
+            } else {
+                k-- ;
+                curr *= 10 ;
+            }
+        }
+        return curr ;
+    }
+};
