@@ -1,3 +1,4 @@
+# Approach 01 : 
 class Solution {
 public:
     int maxDifference(string s) {
@@ -13,5 +14,31 @@ public:
             }
         }
         return diff ;
+    }
+};
+
+------------------------------------------------------------------------------------------------------
+# Approach 02 : 
+
+class Solution {
+public:
+    int maxDifference(string s) {
+        int n = s.length() ;
+        sort(s.begin(), s.end()) ;
+        int minE = INT_MAX, maxO = INT_MIN ;
+        int cnt = 1 ;
+        char c = s[0] ;
+        for(int i = 1; i < n; i++) {
+            if(c == s[i]) cnt++ ;
+            else {
+                if(cnt % 2 == 0) minE = min(minE, cnt) ;
+                else maxO = max(maxO, cnt) ;
+                cnt = 1 ;
+                c = s[i] ;
+            }
+        }
+        if(cnt % 2 == 0) minE = min(minE, cnt) ;
+        else maxO = max(maxO, cnt) ;
+        return maxO - minE ;
     }
 };
