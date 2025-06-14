@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int minMaxDifference(int num) {
+        string s = to_string(num) ;
+        vector<int> v ;
+        int n = s.length() ;
+        for(char i = '0'; i <= '9'; i++) {
+            string p = s ;
+            for(int j = 0; j < n; j++) {
+                if(p[j] == i) p[j] = '9' ;
+            }
+            v.push_back(stoi(p)) ;
+        }
+        for(char i = '0'; i <= '9'; i++) {
+            string p = s ;
+            for(int j = 0; j < n; j++) {
+                if(p[j] == i) p[j] = '0' ;
+            }
+            v.push_back(stoi(p)) ;
+        }
+        sort(v.begin(), v.end()) ;
+        return v.back() - v[0] ;
+    }
+};
