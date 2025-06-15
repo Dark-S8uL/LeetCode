@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int maxDiff(int num) {
+        string s = to_string(num) ;
+        set<char> st(s.begin(), s.end()) ;
+        int maxi = num, mini = num ;
+        for(char d : st) {
+            for(char c = '0'; c <= '9'; c++) {
+                if(s[0] == d && c == '0') continue ;
+                string p = s ;
+                replace(p.begin(), p.end(), d, c) ;
+                int a = stoi(p) ;
+                maxi = max(maxi, a) ;
+                mini = min(mini, a) ;
+            }
+        }
+        return maxi - mini ;
+    }
+};
