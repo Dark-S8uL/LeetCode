@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int MOD = 1e9 + 7 ;
+    int specialTriplets(vector<int>& nums) {
+        int n = nums.size() ;
+        unordered_map<int, int> l, r ;
+        for(int num : nums) r[num]++ ;
+        long long cnt = 0 ;
+        for(int j = 0; j < n; j++) {
+            r[nums[j]]-- ;
+            int x = nums[j] * 2 ;
+            long long left = l[x], right = r[x] ;
+            cnt = (cnt + (left * right) % MOD) % MOD ;
+            l[nums[j]]++ ;
+        }
+        return cnt ;
+    }
+};
