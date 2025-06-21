@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int minimumDeletions(string word, int k) {
+        map<char, int> mp ;
+        for(char c : word) mp[c]++ ;
+        int ans = INT_MAX ;
+        for(auto& pair : mp) {
+            int a = pair.second, d = 0 ;
+            for(auto& p : mp) {
+                if(p.second < a) d += p.second ;
+                else if(p.second > a+k) d += p.second - (a + k) ;
+            }
+            ans = min(ans, d) ;
+        }
+        return ans ;
+    }
+};
