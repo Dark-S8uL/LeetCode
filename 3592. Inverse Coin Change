@@ -1,0 +1,21 @@
+class Solution {
+public:
+    vector<int> findCoins(vector<int>& nums) {
+        int n = nums.size() ;
+        vector<int> v ;
+        for(int i = 0; i < n; i++) {
+            if(nums[i] == 0) continue ;
+            if(nums[i] == 1) {
+                v.push_back(i+1) ;
+                for(int j = n-1; j > i; j--) {
+                    nums[j] -= nums[j-i-1] ;
+                }
+                nums[i]-- ;
+            }
+        }
+        for(int num : nums) {
+            if(num != 0) return {} ;
+        }
+        return v ;
+    }
+};
