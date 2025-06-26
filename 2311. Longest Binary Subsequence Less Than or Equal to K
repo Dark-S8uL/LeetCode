@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int longestSubsequence(string s, int k) {
+        int n = s.length() ;
+        reverse(s.begin(), s.end()) ;
+        int cnt = 0 ;
+        int i = 0 ;
+        double val = 0 ;
+        for(; i < n; i++) {
+            if(s[i] == '1') {
+                val += pow(2, i) ;
+                if(val > k) break ;
+                cnt++ ;
+            } else cnt++ ;
+        }
+        for(; i < n; i++) {
+            if(s[i] == '0') cnt++ ;
+        }
+        return cnt ;
+    }
+};
