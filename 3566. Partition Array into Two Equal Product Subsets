@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool solve(int i, long long p, long long t, vector<int>& nums) {
+        if(p > t) return false ;
+        if(p == t) return true ;
+        if(i == nums.size()) return false ;
+        if(solve(i+1, p*nums[i], t, nums)) return true ;
+        if(solve(i+1, p, t, nums)) return true ;
+        return false ;
+    }
+    bool checkEqualPartitions(vector<int>& nums, long long target) {
+        int n = nums.size() ;
+        sort(nums.begin(), nums.end()) ;
+        if(nums[n-1] > target) return false ;
+        double t = 1 ;
+        for(int num : nums) {
+            t *= num ;
+            if(t > (double)target * target) return false ;
+        }
+        if(t != (double)target * target) return false ;
+        return solve(0, 1LL, target, nums) ;
+    }
+};
