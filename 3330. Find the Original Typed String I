@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int possibleStringCount(string word) {
+        int n = word.size() ;
+        int cnt = 1 ;
+        char dup = word[0] ;
+        int c = 1 ;
+        for(int i = 1; i < n; i++) {
+            if(dup == word[i]) c++ ;
+            else {
+                cnt += (c - 1) ;
+                dup = word[i] ;
+                c = 1 ;
+            }
+        }
+        cnt += (c - 1) ;
+        return cnt ;
+    }
+};
