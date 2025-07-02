@@ -1,0 +1,17 @@
+class Solution {
+public:
+    vector<string> partitionString(string s) {
+        vector<string> v ;
+        unordered_set<string> st ;
+        string p = "" ;
+        for(char c : s) {
+            p += c ;
+            if(st.find(p) == st.end()) {
+                st.insert(p) ;
+                v.push_back(p) ;
+                p = "" ;
+            }
+        }
+        return v ;
+    }
+};
