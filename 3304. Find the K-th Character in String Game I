@@ -1,0 +1,38 @@
+# Approach 01 : 
+
+class Solution {
+public:
+    char kthCharacter(int k) {
+        string s = "a" ;
+        int n ;
+        if(k % 2 == 0) n = k / 2 ;
+        else n = k / 2 + 1 ;
+        int cnt = 1 ;
+        for(int i = 0; i < n; i++) {
+            int m = s.length() ;
+            for(int j = 0; j < m; j++) {
+                if(cnt == k) return s.back() ;
+                if(s[j] == 'z') s.push_back('a') ;
+                else s.push_back(s[j]+1) ;
+                cnt++ ;
+            }
+        }
+        return s[k-1] ;
+    }
+};
+
+-------------------------------------------------------------------
+# Approach 02 : 
+
+class Solution {
+public:
+    char kthCharacter(int k) {
+        int cnt = 0 ;
+        k-- ;
+        while(k) {
+            k &= (k - 1) ;
+            cnt++ ;
+        }
+        return 'a' + cnt ;
+    }
+};
