@@ -1,0 +1,18 @@
+class Solution {
+public:
+    long long solve(int i, int j, int m, int n, long long f, vector<vector<int>>& wc, vector<vector<vector<long long>>>& t) {
+        if(i >= m || j >= n) return 1e15 ;
+        if(i == m-1 && j == n-1) return 0 ;
+        if(t[i][j][f] != -1) return t[i][j][f] ;
+        long long cost = LLONG_MAX ;
+        if(f == 1) {
+            cost = min(cost, (i+2) * (j+1) + solve(i+1, j, m, n, 0, wc, t)) ;
+            cost = min(cost, (i+1) * (j+2) + solve(i, j+1, m, n, 0, wc, t)) ;
+        } else cost = min(cost, wc[i][j] + solve(i, j, m, n, 1, wc, t)) ;
+        return t[i][j][f] = cost ;
+    }
+    long long minCost(int m, int n, vector<vector<int>>& wc) {
+        vector<vector<vector<long long>>> t(m+1, vector<vector<long long>>(n+1, vector<long long>(2, -1))) ;
+        return 1 + solve(0, 0, m, n, 1, wc, t) ;
+    }
+};
