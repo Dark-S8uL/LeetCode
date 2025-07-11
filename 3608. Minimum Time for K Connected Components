@@ -1,0 +1,39 @@
+class Solution {
+public:
+    void dfs(int s, vector<vector<pair<int, int>>>& adj, vector<int>& vis, int maxT) {
+        vis[s] = true ;
+        for(auto& x : adj[s]) {
+            if(x.second > maxT && !vis[x.first]) dfs(x.first, adj, vis, maxT) ;
+        }
+    }
+    bool isValid(int n, vector<vector<pair<int, int>>>& adj, int maxT, int k) {
+        vector<int> vis(n, 0) ;
+        int cnt = 0 ;
+        for(int i = 0; i < n; i++) {
+            if(!vis[i]) {
+                cnt++ ;
+                dfs(i, adj, vis, maxT) ;
+            }
+        }
+        return cnt >= k ;
+    }
+    int minTime(int n, vector<vector<int>>& edges, int k) {
+        vector<vector<pair<int, int>>> adj(n) ;
+        int i = 0, j = 0 ;
+        for(auto& edge : edges) {
+            int u = edge[0], v = edge[1], t = edge[2] ;
+            adj[u].push_back({v, t}) ;
+            adj[v].push_back({u, t}) ;
+            j = max(j, t) ;
+        }
+        int minT = 0 ;
+        while(i <= j) {
+            int mid = i + (j - i) / 2 ;
+            if(isValid(n, adj, mid, k)) {
+                minT = mid ;
+                j = mid - 1 ;
+            } else i = mid + 1 ;
+        }
+        return minT ;
+    }
+};
