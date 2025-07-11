@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int mostBooked(int n, vector<vector<int>>& mt) {
+        int m = mt.size() ;
+        sort(mt.begin(), mt.end()) ;
+        priority_queue<pair<long long, int>, vector<pair<long long, int>>, greater<>> busy ;
+        priority_queue<int, vector<int>, greater<>> free ;
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>> pq ;
+        for(int i = 0; i < m; i++) {
+            pq.push({mt[i][0], mt[i][1]}) ;
+        }
+        for(int i = 0; i < n; i++) {
+            free.push(i) ;
+        }
+        vector<int> v(n, 0) ;
+        while(!pq.empty()) {
+            auto [s, e] = pq.top() ; pq.pop() ;
+            while(!busy.empty() && busy.top().first <= s) {
+                free.push(busy.top().second) ;
+                busy.pop() ;
+            }
+            if(!free.empty()) {
+                int i = free.top() ; free.pop() ;
+                v[i]++ ;
+                busy.push({e, i}) ;
+            } else {
+                auto [et, i] = busy.top() ; busy.pop() ;
+                v[i]++ ;
+                int d = e - s ;
+                busy.push({et+d, i}) ;
+            }
+        }
+        int maxi = INT_MIN, room = -1 ;
+        for(int i = 0; i < n; i++) {
+            if(v[i] > maxi) {
+                maxi = v[i] ;
+                room = i ;
+            }
+        }
+        return room ;
+    }
+};
