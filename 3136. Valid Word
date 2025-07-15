@@ -1,0 +1,19 @@
+class Solution {
+public:
+    bool isvowel(char ch){
+        return (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u' || 
+        ch == 'A' || ch == 'E' || ch == 'I' || ch == 'O' || ch == 'U') ;
+    }
+    bool isValid(string word) {
+        if(word.length() < 3) return false ;
+        int d = 0, v = 0, c = 0 ;
+        for(char ch : word){
+            if(isdigit(ch)) d++ ;
+            if(isalpha(ch) && isvowel(ch)) v++ ;
+            if(isalpha(ch) && !isvowel(ch)) c++ ;
+            if(ch == '@' || ch == '#' || ch == '$') return false ;
+        }
+        if((v || c || d) && v && c) return true ;
+        return false ;
+    }
+};
