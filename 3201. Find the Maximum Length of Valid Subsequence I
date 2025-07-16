@@ -1,0 +1,35 @@
+class Solution {
+public:
+    int maximumLength(vector<int>& nums) {
+        int n = nums.size() ;
+        int maxi = INT_MIN ;
+        int e = 0, o = 0 ;
+        for(int num : nums) {
+            if(num % 2 != 0) e++ ;
+            else o++ ;
+        }
+        maxi = max({maxi, e, o}) ;
+        int cnt1 = 0, cnt2 = 0 ;
+        bool f = false, g = false ;
+        for(int num : nums) {
+            if(num % 2 == 0 && !f) {
+                cnt1++ ;
+                f = true ;
+            }
+            if(num % 2 == 0 && g) {
+                cnt2++ ;
+                g = false ;
+            }
+            if(num % 2 != 0 && f) {
+                cnt1++ ;
+                f = false ;
+            }
+            if(num % 2 != 0 && !g) {
+                cnt2++ ;
+                g = true ;
+            }
+        }
+        maxi = max({maxi, cnt1, cnt2}) ;
+        return maxi ;
+    }
+};
