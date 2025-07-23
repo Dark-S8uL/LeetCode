@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int maximumGain(string s, int x, int y) {
+        string a = (x > y) ? "ab" : "ba", b = (x > y) ? "ba" : "ab" ;
+        int na = max(x, y), nb = min(x, y) ;
+        stack<char> st ;
+        int ans = 0 ;
+        for(char c : s) {
+            if(!st.empty() && st.top() == a[0] && c == a[1]) {
+                ans += na ;
+                st.pop() ;
+            } else st.push(c) ;
+        }
+        s.clear() ;
+        while(!st.empty()) {
+            s += st.top() ;
+            st.pop() ;
+        }
+        reverse(s.begin(), s.end()) ;
+        for(char c : s) {
+            if(!st.empty() && st.top() == b[0] && c == b[1]) {
+                ans += nb ;
+                st.pop() ;
+            } else st.push(c) ;
+        }
+        return ans ;
+    }
+};
