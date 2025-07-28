@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int solve(int i, int n, int curr, int maxi, vector<int>& nums) {
+        if(i >= n) return curr == maxi ? 1 : 0 ;
+        if(curr == maxi) return pow(2, n-i) ;
+        int inc = solve(i+1, n, curr | nums[i], maxi, nums) ;
+        int exc = solve(i+1, n, curr, maxi, nums) ;
+        return inc + exc ;
+    }
+    int countMaxOrSubsets(vector<int>& nums) {
+        int n = nums.size() ;
+        int maxi = 0 ;
+        for(int i = 0; i < n; i++) maxi |= nums[i] ;
+        return solve(0, n, 0, maxi, nums) ;
+    }
+};
