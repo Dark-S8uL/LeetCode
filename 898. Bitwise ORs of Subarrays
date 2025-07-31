@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int subarrayBitwiseORs(vector<int>& arr) {
+        int n = arr.size() ;
+        set<int> st, curr ;
+        for(int a : arr) {
+            set<int> temp ;
+            temp.insert(a) ;
+            for(int c : curr) temp.insert(a | c) ;
+            st.insert(temp.begin(), temp.end()) ;
+            curr = temp ;
+        }
+        return st.size() ;
+    }
+};
