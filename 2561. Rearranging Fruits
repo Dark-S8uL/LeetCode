@@ -1,0 +1,26 @@
+class Solution {
+public:
+    long long minCost(vector<int>& b1, vector<int>& b2) {
+        int n = b1.size() ;
+        map<int, int> mp ;
+        for(int b : b1) mp[b]++ ;
+        for(int b : b2) mp[b]++ ;
+        long long mini = LLONG_MAX ;
+        for(auto const& [b, cnt] : mp) {
+            if(cnt % 2 != 0) return -1 ;
+            mini = min(mini, (long long)b) ;
+        }
+        vector<long long> v ;
+        map<int, int> mp1 ;
+        for(int b : b1) mp1[b]++ ;
+        for(auto const& [b, tc] : mp) {
+            int diff = mp1[b] - (tc / 2) ;
+            for(int i = 0; i < abs(diff); i++) v.push_back(b) ;
+        }
+        sort(v.begin(), v.end()) ;
+        long long cost = 0 ;
+        int p = v.size() / 2 ;
+        for(int i = 0; i < p; i++) cost += min(v[i], 2 * mini) ;
+        return cost ;
+    }
+};
