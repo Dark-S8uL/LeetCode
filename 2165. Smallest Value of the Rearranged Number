@@ -1,0 +1,17 @@
+class Solution {
+public:
+    long long smallestNumber(long long num) {
+        string s = to_string(num) ;
+        int i = 0 ;
+        if(num < 0) {
+            sort(s.begin()+1, s.end()) ;
+            reverse(s.begin()+1, s.end()) ;
+            return stoll(s) ;
+        }
+        sort(s.begin(), s.end()) ;
+        int j = i ;
+        while(s[j] == '0') j++ ;
+        if(j < s.length()) swap(s[i], s[j]) ;
+        return stoll(s) ;
+    }
+};
