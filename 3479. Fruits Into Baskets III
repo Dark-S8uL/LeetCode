@@ -1,0 +1,36 @@
+class Solution {
+public:
+    void build(int i, int l, int r, vector<int>& baskets, vector<int>& v) {
+        if(l == r) {
+            v[i] = baskets[r] ;
+            return ;
+        }
+        int mid = l + (r-l) / 2 ;
+        build(2*i+1, l, mid, baskets, v) ;
+        build(2*i+2, mid+1, r, baskets, v) ;
+        v[i] = max(v[2*i+1], v[2*i+2]) ;
+    }
+    bool check(int i, int l, int r, vector<int>& v, int fr) {
+        if(v[i] < fr) return false ;
+        if(l == r) {
+            v[i] = -1 ;
+            return true ;
+        }
+        int mid = l + (r-l) / 2 ;
+        bool f = false ;
+        if(v[2*i+1] >= fr) f = check(2*i+1, l, mid, v, fr) ;
+        else f = check(2*i+2, mid+1, r, v, fr) ;
+        v[i] = max(v[2*i+1], v[2*i+2]) ;
+        return f ;
+    }
+    int numOfUnplacedFruits(vector<int>& fruits, vector<int>& baskets) {
+        int n = fruits.size() ;
+        vector<int> v(4*n, -1) ;
+        build(0, 0, n-1, baskets, v) ;
+        int cnt = 0 ;
+        for(int fr : fruits) {
+            if(!check(0, 0, n-1, v, fr)) cnt++ ;
+        }
+        return cnt ;
+    }
+};
