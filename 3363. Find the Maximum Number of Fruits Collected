@@ -3,21 +3,15 @@ public:
     vector<vector<int>> t ;
     int solve(int i, int j, int n, int f, vector<vector<int>>& fr) {
         if(i < 0 || i >= n || j < 0 || j >= n) return 0 ;
+        if((f == 1 && i >= j) || (f == 2 && i <= j)) return 0 ;
         if(t[i][j] != -1) return t[i][j] ;
         int res = 0 ;
-        if(f == 1) {
-            if(i == j) res = max(res, solve(i+1, j+1, n, f, fr)) ;
-            else if(i-1 == j) res = max({res, solve(i+1, j+1, n, f, fr), solve(i, j+1, n, f, fr)}) ;
-            else res = max({res, solve(i+1, j+1, n, f, fr), 
-                                solve(i, j+1, n, f, fr), 
-                                solve(i-1, j+1, n, f, fr)}) ;
-        } else {
-            if(i == j) res = max(res, solve(i+1, j+1, n, f, fr)) ;
-            else if(i == j-1) res = max({res, solve(i+1, j+1, n, f, fr), solve(i+1, j, n, f, fr)}) ;
-            else res = max({res, solve(i+1, j+1, n, f, fr), 
-                                solve(i+1, j, n, f, fr), 
-                                solve(i+1, j-1, n, f, fr)}) ;
-        }
+        if(f == 1) res = max({res, solve(i+1, j+1, n, f, fr), 
+                                    solve(i+1, j, n, f, fr), 
+                                    solve(i+1, j-1, n, f, fr)}) ;
+        else res = max({res, solve(i+1, j+1, n, f, fr), 
+                            solve(i, j+1, n, f, fr), 
+                            solve(i-1, j+1, n, f, fr)}) ;
         return t[i][j] = fr[i][j] + res ;
     }
     int maxCollectedFruits(vector<vector<int>>& fr) {
@@ -28,8 +22,8 @@ public:
             fr[i][i] = 0 ;
         }
         t = vector<vector<int>>(n, vector<int>(n, -1)) ;
-        int b = solve(n-1, 0, n, 1, fr) ;
-        int r = solve(0, n-1, n, 2, fr) ;
+        int r = solve(0, n-1, n, 1, fr) ;
+        int b = solve(n-1, 0, n, 2, fr) ;
         return g + r + b ;
     }
 };
