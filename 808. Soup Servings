@@ -1,0 +1,21 @@
+class Solution {
+public:
+    vector<vector<double>> t ;
+    double solve(int a, int b) {
+        if(a <= 0 && b <= 0) return 0.5 ;
+        if(b <= 0) return 0 ;
+        if(a <= 0) return 1 ;
+        if(t[a][b] != -1) return t[a][b] ;
+        double d = 0 ;
+        d += solve(a-100, b) ;
+        d += solve(a-75, b-25) ;
+        d += solve(a-50, b-50) ;
+        d += solve(a-25, b-75) ;
+        return t[a][b] = d * 0.25 ;
+    }
+    double soupServings(int n) {
+        if(n > 4450) return 1 ;
+        t = vector<vector<double>>(n+1, vector<double>(n+1, -1)) ;
+        return solve(n, n) ;
+    }
+};
