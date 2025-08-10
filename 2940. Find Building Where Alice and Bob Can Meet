@@ -1,0 +1,52 @@
+class Solution {
+public:
+    void build(int i, int l, int r, vector<int>& v, vector<int>& ht) {
+        if(l == r) {
+            v[i] = r ;
+            return ;
+        }
+        int mid = l + (r-l) / 2 ;
+        build(2*i+1, l, mid, v, ht) ;
+        build(2*i+2, mid+1, r, v, ht) ;
+        int leftIdx = v[2*i+1], rightIdx = v[2*i+2] ;
+        v[i] = (ht[leftIdx] >= ht[rightIdx]) ? leftIdx : rightIdx ;
+    }
+    int RMIQ(int st, int end, int i, int l, int r, vector<int>& v, vector<int>& ht) {
+        if(l > end || r < st) return -1 ;
+        if(l >= st && r <= end) return v[i] ;
+        int mid = l + (r-l) / 2 ;
+        int leftIdx = RMIQ(st, end, 2*i+1, l, mid, v, ht) ;
+        int rightIdx = RMIQ(st, end, 2*i+2, mid+1, r, v, ht) ;
+        if(leftIdx == -1) return rightIdx ;
+        if(rightIdx == -1) return leftIdx ;
+        return (ht[leftIdx] >= ht[rightIdx]) ? leftIdx : rightIdx ;
+    }
+
+    vector<int> leftmostBuildingQueries(vector<int>& ht, vector<vector<int>>& queries) {
+        int n = ht.size() ;
+        vector<int> v(4*n) ;
+        build(0, 0, n-1, v, ht) ;
+        vector<int> ans ;
+        for(auto& q : queries) {
+            int st = q[0], end = q[1] ;
+            int maxIdx = max(st, end), minIdx = min(st, end) ;
+            if(st == end) ans.push_back(st) ;
+            else if(ht[minIdx] < ht[maxIdx]) ans.push_back(maxIdx) ;
+            else {
+                int l = maxIdx+1, r = n-1 ;
+                int idx = INT_MAX ;
+                while(l <= r) {
+                    int mid = l + (r-l) / 2 ;
+                    int i = RMIQ(l, mid, 0, 0, n-1, v, ht) ;
+                    if(ht[i] > max(ht[st], ht[end])) {
+                        idx = min(idx, i) ;
+                        r = mid-1 ;
+                    } else l = mid+1 ;
+                }
+                if(idx == INT_MAX) ans.push_back(-1) ;
+                else ans.push_back(idx) ;
+            }
+        }
+        return ans ;
+    }
+};
