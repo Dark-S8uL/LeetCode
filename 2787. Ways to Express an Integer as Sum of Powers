@@ -1,0 +1,24 @@
+class Solution {
+public: 
+    long long power(int b, int e) {
+        long long p = 1 ;
+        while(e--) p *= b ;
+        return p ;
+    }
+    const int mod = 1e9 + 7 ;
+    long long t[301][301] ;
+    long long solve(int a, int n, int x, long long sum) {
+        if(sum == n) return 1 ;
+        if(sum > n || a > n) return 0 ;
+        if(t[a][sum] != -1) return t[a][sum] ;
+        long long p = power(a, x) % mod ;
+        long long skip = solve(a+1, n, x, sum) % mod ;
+        long long take = 0 ;
+        if(sum + p <= n) take = solve(a+1, n, x, sum + p) % mod ;
+        return t[a][sum] = (skip + take) % mod ;
+    }
+    int numberOfWays(int n, int x) {
+        memset(t, -1, sizeof(t)) ;
+        return solve(1, n, x, 0) % mod ;
+    }
+};
