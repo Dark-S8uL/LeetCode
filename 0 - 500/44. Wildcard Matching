@@ -1,0 +1,17 @@
+class Solution {
+public: 
+    int t[2001][2001] ;
+    bool check(int i, int j, string& s, string& p) {
+        if(i >= s.length() && j >= p.length()) return true ;
+        if(j >= p.length()) return false ;
+        if(t[i][j] != -1) return t[i][j] ;
+        bool f = false ;
+        if(p[j] == '*') f = (check(i, j+1, s, p) || (i < s.length() && check(i+1, j, s, p))) ;
+        else if(i < s.length() && (p[j] == s[i] || p[j] == '?')) f = check(i+1, j+1, s, p) ;
+        return t[i][j] = f ;
+    }
+    bool isMatch(string s, string p) {
+        memset(t, -1, sizeof(t)) ;
+        return check(0, 0, s, p) ;
+    }
+};
