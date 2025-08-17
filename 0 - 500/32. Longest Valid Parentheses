@@ -1,0 +1,45 @@
+# Approach 01 : 
+
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        int n = s.length() ;
+        int lb = 0, rb = 0 ;
+        int maxLen = 0 ;
+        for(int i = 0; i < n; i++) {
+            if(s[i] == '(') lb++ ;
+            else rb++ ;
+            if(lb == rb) maxLen = max(maxLen, 2 * rb) ;
+            else if(rb > lb) lb = rb = 0 ;
+        }
+        lb = rb = 0 ;
+        for(int i = n-1; i >= 0; i--) {
+            if(s[i] == '(') lb++ ;
+            else rb++ ;
+            if(lb == rb) maxLen = max(maxLen, 2 * lb) ;
+            else if(lb > rb) lb = rb = 0 ;
+        }
+        return maxLen ;
+    }
+};
+
+----------------------------------------------------------
+# Approach 02 : 
+
+class Solution {
+public:
+    int longestValidParentheses(string s) {
+        int n = s.length() ;
+        stack<int> st ;
+        st.push(-1) ;
+        int maxLen = 0 ;
+        for(int i = 0; i < n; i++) {
+            if(s[i] == ')') {
+                st.pop() ;
+                if(st.empty()) st.push(i) ;
+                else maxLen = max(maxLen, i - st.top()) ;
+            } else st.push(i) ;
+        }
+        return maxLen ;
+    }
+};
