@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int numSubmat(vector<vector<int>>& mat) {
+        int m = mat.size(), n = mat[0].size() ;
+        vector<vector<int>> v(m, vector<int>(n, 0)) ;
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                if(mat[i][j]) v[i][j] = (j > 0 ? v[i][j-1] : 0) + 1 ;
+            }
+        }
+        int cnt = 0 ;
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                if(mat[i][j]) {
+                    int w = v[i][j] ;
+                    for(int k = i; k >= 0 && w > 0; k--) {
+                        w = min(w, v[k][j]) ;
+                        cnt += w ;
+                    }
+                }
+            }
+        }
+        return cnt ;
+    }
+};
