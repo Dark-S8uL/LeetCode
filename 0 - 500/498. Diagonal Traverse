@@ -1,0 +1,27 @@
+class Solution {
+public:
+    void trav(int i, int j, vector<vector<int>>& mat, vector<int>& temp) {
+        while(i >= 0 && j < mat[0].size()) {
+            temp.push_back(mat[i][j]) ;
+            i-- ;
+            j++ ;
+        }
+    }
+    vector<int> findDiagonalOrder(vector<vector<int>>& mat) {
+        int m = mat.size(), n = mat[0].size() ;
+        vector<int> v ;
+        for(int i = 0; i < m; i++) {
+            vector<int> temp ;
+            trav(i, 0, mat, temp) ;
+            if(i % 2) reverse(temp.begin(), temp.end()) ;
+            v.insert(v.end(), temp.begin(), temp.end()) ;
+        }
+        for(int j = 1; j < n; j++) {
+            vector<int> temp ;
+            trav(m-1, j, mat, temp) ;
+            if((m-1+j) % 2) reverse(temp.begin(), temp.end()) ;
+            v.insert(v.end(), temp.begin(), temp.end()) ; 
+        }
+        return v ;
+    }
+};
