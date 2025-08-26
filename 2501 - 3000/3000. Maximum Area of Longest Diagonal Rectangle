@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int areaOfMaxDiagonal(vector<vector<int>>& dims) {
+        int maxArea = 0 ;
+        float maxi = 0 ;
+        for(auto& d : dims) {
+            float h = sqrt((d[0] * d[0]) + (d[1] * d[1])) ;
+            int area = d[0] * d[1] ;
+            if(h > maxi) {
+                maxi = h ;
+                maxArea = area ;
+            } else if(h == maxi) maxArea = max(maxArea, area) ;
+        }
+        return maxArea ;
+    }
+};
