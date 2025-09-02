@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int numberOfPairs(vector<vector<int>>& pts) {
+        int n = pts.size() ;
+        int cnt = 0 ;
+        for(int i = 0; i < n-1; i++) {
+            int a = pts[i][0], b = pts[i][1] ;
+            for(int j = i+1; j < n; j++) {
+                int x = pts[j][0], y = pts[j][1] ;
+                if((a <= x && b >= y) || (x <= a && y >= b)) {
+                    bool f = true ;
+                    for(int k = 0; k < n; k++) {
+                        if(k == i || k == j) continue ;
+                        int p = pts[k][0], q = pts[k][1] ;
+                        if(p >= min(a, x) && p <= max(a, x) && q >= min(b, y) && q <= max(b, y)) {
+                            f = false ;
+                            break ;
+                        }
+                    }
+                    if(f) cnt++ ; 
+                }
+            }
+        }
+        return cnt ;
+    }
+};
