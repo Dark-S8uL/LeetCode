@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int numberOfPairs(vector<vector<int>>& pts) {
+        int n = pts.size() ;
+        sort(pts.begin(), pts.end(), [&](const vector<int>& a, const vector<int>& b) {
+            return a[0] == b[0] ? a[1] > b[1] : a[0] < b[0] ;
+        });
+        int cnt = 0 ;
+        for(int i = 0; i < n; i++) {
+            int y1 = pts[i][1], last = INT_MIN ;
+            for(int j = i+1; j < n; j++) {
+                int y2 = pts[j][1] ;
+                if(y2 <= y1 && y2 > last) {
+                    last = y2 ;
+                    cnt++ ;
+                }
+            }
+        }
+        return cnt ;
+    }
+};
