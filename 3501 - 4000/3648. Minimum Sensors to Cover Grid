@@ -1,0 +1,9 @@
+class Solution {
+public:
+    int minSensors(int n, int m, int k) {
+        int s = 2 * k + 1 ;
+        int a = n/s + (n % s ? 1 : 0) ;
+        int b = m/s + (m % s ? 1 : 0) ;
+        return a * b ;
+    }
+};
