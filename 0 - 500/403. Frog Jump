@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int t[2001][2001] ;
+    bool solve(int i, int n, int k, vector<int>& stones, unordered_map<int, int>& mp) {
+        if(i >= n-1) return true ;
+        if(t[i][k] != -1) return t[i][k] ;
+        for(int j = k-1; j <= k+1; j++) {
+            if(j > 0 && mp.find(stones[i] + j) != mp.end()) {
+                if(solve(mp[stones[i] + j], n, j, stones, mp)) return t[i][k] = 1 ;
+            }
+        }
+        return t[i][k] = 0 ;
+    }
+    bool canCross(vector<int>& stones) {
+        int n = stones.size() ;
+        if(stones[1] != 1) return false ;
+        unordered_map<int, int> mp ;
+        for(int i = 0; i < n; i++) mp[stones[i]] = i ;
+        memset(t, -1, sizeof(t)) ;
+        return solve(1, n, 1, stones, mp) ;
+    }
+};
