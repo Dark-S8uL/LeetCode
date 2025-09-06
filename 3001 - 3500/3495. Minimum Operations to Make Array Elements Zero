@@ -1,0 +1,18 @@
+class Solution {
+public:
+    long long minOperations(vector<vector<int>>& queries) {
+        long long cnt = 0 ;
+        for(auto& q : queries) {
+            long long st = q[0], end = q[1] ;
+            long long prev = 1, p = 0 ;
+            for(long long d = 1; d <= 16; d++) {
+                long long curr = prev * 4LL ;
+                long long l = max(st, prev), r = min(end, curr-1) ;
+                if(r >= l) p += (r-l+1) * d ;
+                prev = curr ;
+            }
+            cnt += (p+1) / 2 ;
+        }
+        return cnt ;
+    }
+};
