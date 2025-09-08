@@ -1,0 +1,44 @@
+# Approach 01 :
+
+class Solution {
+public:
+    bool check(int n) {
+        while(n) {
+            if(n % 10 == 0) return false ;
+            n /= 10 ;
+        }
+        return true ;
+    }
+    vector<int> getNoZeroIntegers(int n) {
+        for(int a = 1; a <= n/2; a++) {
+            if(check(a) && check(n-a)) return {a, n-a} ;
+        }
+        return {} ;
+    }
+};
+
+-----------------------------------------------------------------
+# Approach 02 :
+
+class Solution {
+public:
+    vector<int> getNoZeroIntegers(int n) {
+        for(int a = 1; a <= n/2; a++) {
+            if((a % 10 != 0) && ((n-a) % 10 != 0)) {
+                string s1 = to_string(a), s2 = to_string(n-a) ;
+                bool f = false ;
+                for(char c : s1) {
+                    if(c == '0') f = true ;
+                }
+                if(f) continue ;
+                f = false ;
+                for(char c : s2) {
+                    if(c == '0') f = true ;
+                }
+                if(f) continue ;
+                return {a, n-a} ;
+            }
+        }
+        return {-1, -1} ;
+    }
+};
