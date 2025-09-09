@@ -1,0 +1,36 @@
+# Approach 01 : 
+
+class Solution {
+public:
+    int minOperations(string s) {
+        sort(s.begin(), s.end()) ;
+        int i = 0 ;
+        while(i < s.length() && s[i] == 'a') i++ ;
+        if(i == s.length()) return 0 ;
+        return ('a' + 26 - s[i]) % 26 ;
+    }
+};
+
+--------------------------------------------------------------
+# Appraoch 02 :
+
+class Solution {
+public:
+    int minOperations(string s) {
+        set<char> st ;
+        for(char c : s) {
+            if(c != 'a') st.insert(c) ;
+        }
+        int cnt = 0 ;
+        while(st.size() > 1) {
+            auto it = st.begin() ;
+            char a = *it ;
+            it++ ;
+            char b = *it ;
+            cnt += (b - a) ;
+            st.erase(st.begin()) ;
+        }
+        if(!st.empty()) cnt += ('z' - *st.begin()) + 1 ;
+        return cnt ;
+    }
+};
