@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int minimumTeachings(int n, vector<vector<int>>& langs, vector<vector<int>>& frnds) {
+        set<int> st ;
+        for(auto& frnd : frnds) {
+            int u = frnd[0] - 1, v = frnd[1] - 1 ;
+            bool f = false ;
+            for(int x : langs[u]) {
+                for(int y : langs[v]) {
+                    if(x == y) { 
+                        f = true ; 
+                        break ; 
+                    }
+                }
+            }
+            if(!f) { 
+                st.insert(u) ; 
+                st.insert(v) ; 
+            }
+        }
+        int cnt = langs.size() + 1 ;
+        for(int i = 1; i <= n; i++) {
+            int c = 0 ;
+            for(int v : st) {
+                bool f = false ;
+                for(int x : langs[v]) {
+                    if(x == i) { 
+                        f = true ; 
+                        break ; 
+                    }
+                }
+                if(!f) c++ ;
+            }
+            cnt = min(cnt, c) ;
+        }
+        return cnt ;
+    }
+};
