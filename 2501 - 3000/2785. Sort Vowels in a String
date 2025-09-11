@@ -1,0 +1,15 @@
+class Solution {
+public:
+    string sortVowels(string s) {
+        string t = "" ;
+        for(char c : s) {
+            if(c == 'a' || c == 'A' || c == 'e' || c == 'E' || c == 'i' || c == 'I' || c == 'o' || c == 'O' || c == 'u' || c == 'U') t += c ;
+        }
+        sort(t.begin(), t.end()) ;
+        int j = 0 ;
+        for(int i = 0; i < s.length(); i++) {
+            if(s[i] == 'a' || s[i] == 'A' || s[i] == 'e' || s[i] == 'E' || s[i] == 'i' || s[i] == 'I' || s[i] == 'o' || s[i] == 'O' || s[i] == 'u' || s[i] == 'U') s[i] = t[j++] ;
+        }
+        return s ;
+    }
+};
