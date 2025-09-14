@@ -1,0 +1,38 @@
+class Solution {
+public:
+    vector<string> spellchecker(vector<string>& w, vector<string>& queries) {
+        unordered_set<string> st(w.begin(), w.end()) ;
+        unordered_map<string, string> mp1, mp2 ;
+        for(string& s : w) {
+            string a = s ;
+            transform(a.begin(), a.end(), a.begin(), ::tolower) ;
+            if(!mp1.count(a)) mp1[a] = s ;
+            for(char& c : a) {
+                if(c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') c = '*' ;
+            }
+            if(!mp2.count(a)) mp2[a] = s ;
+        }
+        vector<string> v ;
+        for(string& q : queries) {
+            if(st.count(q)) {
+                v.push_back(q) ;
+                continue ;
+            } 
+            string a = q ;
+            transform(a.begin(), a.end(), a.begin(), ::tolower) ;
+            if(mp1.count(a)) {
+                v.push_back(mp1[a]) ;
+                continue ;
+            }
+            for(char& c : a) {
+                if(c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') c = '*' ;
+            }
+            if(mp2.count(a)) {
+                v.push_back(mp2[a]) ;
+                continue ;
+            }
+            v.push_back("") ;
+        }
+        return v ;
+    }
+};
