@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int canBeTypedWords(string txt, string br) {
+        int n = txt.length() ;
+        int cnt = 0 ;
+        int i = 0 ;
+        while(i < n) {
+            if(br.find(txt[i]) != string::npos) {
+                cnt++ ;
+                while(i < n && txt[i] != ' ') i++ ;
+                i++ ;
+            } else i++ ;
+        }
+        int t = 0 ;
+        i = 0 ;
+        while(i < n) {
+            while(i < n && txt[i] != ' ') i++ ;
+            i++ ;
+            t++ ;
+        }
+        return t - cnt ;
+    }
+};
