@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int gcd(int a, int b) {
+        if(b == 0) return a ;
+        return gcd(b, a % b) ;
+    }
+    vector<int> replaceNonCoprimes(vector<int>& nums) {
+        int n = nums.size() ;
+        stack<long long> st ;
+        for(int i = 0; i < n; i++) {
+            if(!st.empty() && gcd(st.top(), nums[i]) > 1) {
+                int a = st.top(), b = nums[i] ;
+                long long lcm ;
+                while(!st.empty() && gcd(a, b) > 1) {
+                    lcm = (1LL * a * b) / gcd(a, b) ;
+                    st.pop() ;
+                    if(st.empty()) break ;
+                    a = st.top() ;
+                    b = (int)lcm ;
+                }
+                st.push(lcm) ;
+            } else st.push(nums[i]) ;
+        }
+        vector<int> v ;
+        while(!st.empty()) {
+            v.push_back((int)st.top()) ;
+            st.pop() ;
+        }
+        reverse(v.begin(), v.end()) ;
+        return v ;
+    }
+};
