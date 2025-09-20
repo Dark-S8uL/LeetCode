@@ -1,0 +1,51 @@
+class Router {
+private:
+    int n ;
+    unordered_map<long long, vector<int>> pkts ;
+    unordered_map<int, vector<int>> mp ;
+    queue<long long> q ;
+
+    long long encode(int s, int d, int t) {
+        return ((long long)s << 40) | ((long long)d << 20) | t ;
+    }
+
+    int lowerBound(vector<int>& list, int target) {
+        return (int)(lower_bound(list.begin(), list.end(), target) - list.begin()) ;
+    }
+
+    int upperBound(vector<int>& list, int target) {
+        return (int)(upper_bound(list.begin(), list.end(), target) - list.begin()) ;
+    }
+
+public:
+    Router(int mlt) { n = mlt ; }
+
+    bool addPacket(int s, int d, int t) {
+        long long key = encode(s, d, t) ;
+        if(pkts.find(key) != pkts.end()) return false ;
+        if(pkts.size() >= n) forwardPacket() ;
+        pkts[key] = {s, d, t} ;
+        q.push(key) ;
+        mp[d].push_back(t) ;
+        return true ;
+    }
+
+    vector<int> forwardPacket() {
+        if(pkts.empty()) return {} ;
+        long long key = q.front() ; q.pop() ;
+        vector<int> pkt = pkts[key] ;
+        pkts.erase(key) ;
+        int dest = pkt[1] ;
+        mp[dest].erase(mp[dest].begin()) ;
+        return pkt ;
+    }
+
+    int getCount(int d, int st, int end) {
+        auto it = mp.find(d) ;
+        if(it == mp.end() || it->second.empty()) return 0 ;
+        vector<int>& list = it->second ;
+        int l = lowerBound(list, st) ;
+        int r = upperBound(list, end) ;
+        return r - l ;
+    }
+};
