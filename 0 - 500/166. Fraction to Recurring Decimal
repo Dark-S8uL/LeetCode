@@ -1,0 +1,26 @@
+class Solution {
+public:
+    string fractionToDecimal(int num, int den) {
+        if(num == 0) return "0" ;
+        unordered_map<long long, int> mp ;
+        string s = "" ;
+        if((long long)num * den < 0) s += '-' ;
+        s += to_string(llabs(num) / llabs(den)) ;
+        long long r = (long long)num % den ;
+        mp[r] = s.length() ;
+        if(r) s += '.' ;
+        while(r) {
+            r *= 10 ;
+            long long d = r / den ;
+            if(mp.find(r) != mp.end()) {
+                s.insert(mp[r], "(") ;
+                s += ')' ;
+                break ;
+            }
+            mp[r] = s.length() ;
+            s += to_string(abs(d)) ;
+            r %= den ;
+        }
+        return s ;
+    }
+};
