@@ -1,16 +1,20 @@
 class Solution {
-public: 
-    int p[201][201] ;
-    int solve(int i, int j, vector<vector<int>>& t) {
-        if(i >= t.size() || j >= t[i].size()) return 0 ;
-        if(p[i][j] != -1) return p[i][j] ;
-        int a = t[i][j] + solve(i+1, j, t) ;
-        int b = t[i][j] + solve(i+1, j+1, t) ;
-        return p[i][j] = min(a, b) ;
+public:
+    int t[201][201] ;
+    int solve(int i, int j, int n, vector<vector<int>>& triangle) {
+        if(i == n-1) return triangle[i][j] ;
+        if(t[i][j] != INT_MAX) return t[i][j] ;
+        int a = solve(i+1, j, n, triangle) ;
+        int b = solve(i+1, j+1, n, triangle) ;
+        return t[i][j] = triangle[i][j] + min(a, b) ;
     }
-    int minimumTotal(vector<vector<int>>& t) {
-        int n = t.size() ;
-        memset(p, -1, sizeof(p)) ;
-        return solve(0, 0, t) ;
+    int minimumTotal(vector<vector<int>>& triangle) {
+        int n = triangle.size() ;
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j <= i; j++) {
+                t[i][j] = INT_MAX ;
+            }
+        }
+        return solve(0, 0, n, triangle) ;
     }
 };
