@@ -1,0 +1,50 @@
+class Solution {
+public:
+    const int mod = 1e9 + 7 ;
+    vector<vector<int>> matrixMul(vector<vector<int>>& a, vector<vector<int>>& b) {
+        vector<vector<int>> c(26, vector<int>(26, 0)) ;
+        for(int i = 0; i < 26; i++) {           // O(26 * 26 * 25)
+            for(int j = 0; j < 26; j++) {
+                for(int k = 0; k < 26; k++) {
+                    c[i][j] = (c[i][j] + (1LL * a[i][k] * b[k][j]) % mod) % mod ;
+                }
+            }
+        }
+        return c ;
+    }
+    vector<vector<int>> matrixExpo(vector<vector<int>>& base, int exp) {        // log(exp)
+        if(exp == 0) {
+            vector<vector<int>> identity(26, vector<int>(26, 0)) ;
+            for(int i = 0; i < 26; i++) {
+                identity[i][i] = 1 ;
+            }
+            return identity ;
+        }
+        vector<vector<int>> half = matrixExpo(base, exp/2) ;
+        vector<vector<int>> res = matrixMul(half, half) ;
+        if(exp % 2) res = matrixMul(res, base) ;
+        return res ;
+    }
+    int lengthAfterTransformations(string s, int t, vector<int>& nums) {
+        vector<int> freq(26, 0) ;
+        for(char& c : s) freq[c - 'a']++ ;
+        vector<vector<int>> T(26, vector<int>(26, 0)) ;
+        for(int i = 0; i < 26; i++) {       // O(26 * 25) == O(1)
+            for(int add = 1; add <= nums[i]; add++) {
+                T[(i+add) % 26][i]++ ;      // % 26 for wrap around
+            }
+        }
+        vector<vector<int>> res = matrixExpo(T, t) ;   // O(log t)
+        vector<int> newFreq(26, 0) ;
+        for(int i = 0; i < 26; i++) {
+            for(int j = 0; j < 26; j++) {
+                newFreq[i] = (newFreq[i] + (1LL * res[i][j] * freq[j]) % mod) % mod ;
+            }
+        }
+        int len = 0 ;
+        for(int i = 0; i < 26; i++) {
+            len = (len + newFreq[i]) % mod ;
+        }
+        return len ;
+    }
+};
