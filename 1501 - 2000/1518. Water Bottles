@@ -1,0 +1,13 @@
+class Solution {
+public:
+    int numWaterBottles(int n, int exc) {
+        int e = n, d = n ;
+        while(e >= exc) {
+            int full = e / exc ;
+            e = e % exc ;
+            e += full ;
+            d += full ;
+        }
+        return d ;
+    }
+};
