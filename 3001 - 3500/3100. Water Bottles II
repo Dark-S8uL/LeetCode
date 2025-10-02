@@ -1,0 +1,12 @@
+class Solution {
+public:
+    int maxBottlesDrunk(int n, int exc) {
+        int d = n ;
+        while(n >= exc) {
+            n -= exc - 1 ;
+            exc++ ;
+            d++ ;
+        }
+        return d ;
+    }
+};
