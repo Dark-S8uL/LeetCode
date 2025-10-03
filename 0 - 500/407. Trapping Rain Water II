@@ -1,0 +1,38 @@
+class Solution {
+public:
+    int trapRainWater(vector<vector<int>>& ht) {
+        int m = ht.size(), n = ht[0].size() ;
+        vector<vector<bool>> vis(m, vector<bool>(n, false)) ;
+        vector<vector<int>> dir = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}} ;
+        auto comp = [&](vector<int>& a, vector<int>& b) {
+            return a[0] >= b[0] ;
+        } ;
+        priority_queue<vector<int>, vector<vector<int>>, decltype(comp)> pq(comp) ;
+        for(int i = 0; i < n; i++) {
+            pq.push({ht[0][i], 0, i}) ;
+            vis[0][i] = true ;
+            pq.push({ht[m-1][i], m-1, i}) ;
+            vis[m-1][i] = true ;
+        }
+        for(int i = 0; i < m; i++) {
+            pq.push({ht[i][0], i, 0}) ;
+            vis[i][0] = true ;
+            pq.push({ht[i][n-1], i, n-1}) ;
+            vis[i][n-1] = true ;
+        }
+        int vol = 0 ;
+        while(!pq.empty()) {
+            auto p = pq.top() ; pq.pop() ;
+            int h = p[0], i = p[1], j = p[2] ;
+            for(auto& d : dir) {
+                int x = i + d[0], y = j + d[1] ;
+                if(x >= 0 && x < m && y >= 0 && y < n && !vis[x][y]) {
+                    vis[x][y] = true ;
+                    if(ht[x][y] < h) vol += h - ht[x][y] ;
+                    pq.push({max(h, ht[x][y]), x, y}) ;
+                }
+            }
+        }
+        return vol ;
+    }
+};
